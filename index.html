@@ -233,17 +233,72 @@
                   placeholder="ঠিকানা"
                 ></textarea>
               </div>
+              <div class="col-span-2">
+                <label class="block font-semibold mb-1">ডেলিভারি চার্জ</label>
+                <div class="flex space-x-6 mt-1">
+                  <label class="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="delivery"
+                      value="inside"
+                      class="mr-2"
+                    />
+                    ঢাকার ভিতরে: <span class="font-semibold px-2">৳ ৫০.০০</span>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="delivery"
+                      value="outside"
+                      class="mr-2"
+                    />
+                    ঢাকার বাহিরে:
+                    <span class="font-semibold px-2">৳ ১০০.০০</span>
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Right: Order Summary -->
           <div class="bg-white p-6 rounded shadow">
-            <div class="flex items-center space-x-4 mb-4">
-              <img src="product.jpg" alt="product" class="w-16 h-16 rounded" />
-              <div>
+            <div class="flex items-start space-x-4 mb-4">
+              <img src="product.jpg" alt="product" class="w-24 h-24 rounded" />
+              <div class="flex-1">
                 <h4 class="font-semibold">অর্গানিক এলার্জি রিমুভাল</h4>
                 <p class="text-sm text-gray-600">৩ দিনের মধ্যে ডেলিভারি</p>
-                <p class="font-bold text-black mt-1">৳ 990.00</p>
+
+                <div class="flex items-end justify-between mt-2">
+                  <!-- Quantity Control -->
+                  <div
+                    class="mt-3 inline-flex border border-gray-300 rounded overflow-hidden"
+                  >
+                    <button
+                      onclick="updateQuantity(-1)"
+                      class="px-3 py-1 bg-white text-gray-700 hover:bg-gray-100"
+                    >
+                      −
+                    </button>
+                    <input
+                      type="number"
+                      id="quantity"
+                      name="quantity"
+                      min="1"
+                      value="1"
+                      class="w-12 px-2 py-1 text-center border-l border-r border-gray-300 outline-none"
+                      readonly
+                    />
+                    <button
+                      onclick="updateQuantity(1)"
+                      class="px-3 py-1 bg-white text-gray-700 hover:bg-gray-100"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <p class="font-bold text-black">
+                    ৳ <span id="unit-price">990</span>.00
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -257,16 +312,19 @@
             </div>
 
             <div class="flex justify-between mt-4 text-sm">
-              <span>শিপিং কস্ট </span><span>৳ 110.00</span>
+              <span>শিপিং কস্ট</span
+              ><span>৳ <span id="shipping-cost">0</span>.00</span>
             </div>
 
             <div
               class="flex justify-between mt-2 text-lg font-bold border-t pt-4"
             >
-              <span>মোট</span><span>৳ 1100.00</span>
+              <span>মোট</span
+              ><span>৳ <span id="total-price">990</span>.00</span>
             </div>
 
             <button
+              onclick="confirmOrder()"
               class="mt-6 w-full bg-primary-500 text-white py-3 rounded hover:bg-primary-700 transition"
             >
               <i class="fas fa-credit-card mr-2"></i> Confirm Order

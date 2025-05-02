@@ -1,31 +1,3 @@
-// function intializeSwiper() {
-//   if (Swiper) {
-//     var swiper = new Swiper(".mySwiper", {
-//       effect: "coverflow",
-//       grabCursor: true,
-//       centeredSlides: true,
-//       slidesPerView: 3,
-//       initialSlide: 1,
-//       loop: true,
-//       coverflowEffect: {
-//         rotate: 50,
-//         stretch: 0,
-//         depth: 100,
-//         modifier: 1,
-//         slideShadows: false,
-//       },
-//       pagination: {
-//         el: ".swiper-pagination",
-//         clickable: true,
-//       },
-//     });
-//   }
-// }
-
-// window.onload = () => {
-//   intializeSwiper();
-// };
-
 function initializeSwiper() {
   const images = [
     "/assets/images/reviews/1.png",
@@ -79,6 +51,68 @@ function initializeSwiper() {
       clickable: true,
     },
   });
+}
+
+const unitPrice = 990;
+const shippingPrices = {
+  inside: 50,
+  outside: 100,
+};
+
+function updateQuantity(change) {
+  const qtyInput = document.getElementById("quantity");
+  let currentQty = parseInt(qtyInput.value) || 1;
+  currentQty += change;
+  if (currentQty < 1) currentQty = 1;
+  qtyInput.value = currentQty;
+  updateTotalPrice();
+}
+
+function updateTotalPrice() {
+  const qty = parseInt(document.getElementById("quantity").value);
+  const delivery = document.querySelector(
+    'input[name="delivery"]:checked'
+  )?.value;
+
+  const shippingCost = delivery ? shippingPrices[delivery] : 0;
+  document.getElementById("shipping-cost").textContent = shippingCost;
+
+  const total = qty * unitPrice + shippingCost;
+  document.getElementById("total-price").textContent = total;
+}
+
+// Auto update when delivery selected
+document.querySelectorAll('input[name="delivery"]').forEach((radio) => {
+  radio.addEventListener("change", updateTotalPrice);
+});
+
+function confirmOrder() {
+  const name = document.querySelector('input[placeholder="নাম"]').value.trim();
+  const email = document.querySelector('input[type="email"]').value.trim();
+  const phone = document.querySelector('input[type="tel"]').value.trim();
+  const address = document.querySelector("textarea").value.trim();
+  const delivery = document.querySelector(
+    'input[name="delivery"]:checked'
+  )?.value;
+  const quantity = parseInt(document.getElementById("quantity").value);
+  const total = parseInt(document.getElementById("total-price").textContent);
+
+  if (!name || !email || !phone || !address || !delivery || quantity < 1) {
+    alert("অনুগ্রহ করে সব ফিল্ড পূরণ করুন।");
+    return;
+  }
+
+  console.log("অর্ডার ডিটেইলস:");
+  console.log("নাম:", name);
+  console.log("ইমেইল:", email);
+  console.log("ফোন:", phone);
+  console.log("ঠিকানা:", address);
+  console.log(
+    "ডেলিভারি:",
+    delivery === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাহিরে"
+  );
+  console.log("পরিমাণ:", quantity);
+  console.log("মোট মূল্য:", total);
 }
 
 window.onload = () => {
