@@ -61,15 +61,18 @@
         </header>
         <header class="py-2 md:hidden bg-gray-300 p-4">
           <div class="w-full my-4">
-            <img src="logo.svg" alt="" class="mx-auto" />
+            <img src="logo.png" alt="" class="mx-auto" />
           </div>
           <div class="flex justify-between items-center mb-4">
-            <div>
-              <div>
-                <i class="fas fa-phone text-[#2E6A47] text-lg"></i>
-                +8801652353665
-              </div>
-            </div>
+            <a href="tel:01812345678">
+              <button
+                type="button"
+                class="bg-[#83A64C] text-white px-4 py-2 rounded hover:bg-[#2E6A47] hover:text-white shadow-md transition"
+              >
+                <i class="fas fa-phone mr-2"></i>
+                কল করুন
+              </button>
+            </a>
             <div>
               <a
                 href="#order"
@@ -305,7 +308,9 @@
 
     <!-- Footer -->
     <footer class="bg-[#2E6A47] text-white text-center p-4">
-      <div class="container flex items-center justify-between">
+      <div
+        class="container flex flex-wrap items-center justify-center md:justify-between gap-2"
+      >
         <div>&copy; ২০২৫ আমার কোম্পানি। সর্বস্বত্ব সংরক্ষিত।</div>
         <div class="flex space-x-4">
           <a href="#" class="text-white hover:text-gray-400">
