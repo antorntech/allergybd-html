@@ -1,0 +1,42 @@
+:root {
+    --color-primary-500: #83A64C;
+    --color-primary-700: #2E6A47;
+}
+
+.bg-primary-500 {
+    background-color: var(--color-primary-500);
+}
+
+.bg-primary-700 {
+    background-color: var(--color-primary-700);
+}
+
+.hover\:bg-primary-700:hover {
+    background-color: var(--color-primary-700);
+}
+
+body section {
+    padding: 2rem 0;
+}
+
+@media (min-width: 992px) {
+    body section {
+        padding: 4rem 0;
+    }
+}
+
+.container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.swiper-pagination-bullet {
+    background-color: #83a64c;
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+    background-color: #2e6a47;
+}
