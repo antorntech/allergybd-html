@@ -87,15 +87,23 @@ document.querySelectorAll('input[name="delivery"]').forEach((radio) => {
 });
 
 function confirmOrder() {
-  const name = document.querySelector('input[placeholder="নাম"]').value.trim();
-  const email = document.querySelector('input[type="email"]').value.trim();
-  const phone = document.querySelector('input[type="tel"]').value.trim();
-  const address = document.querySelector("textarea").value.trim();
-  const delivery = document.querySelector(
+  const nameInput = document.querySelector('input[placeholder="নাম"]');
+  const emailInput = document.querySelector('input[type="email"]');
+  const phoneInput = document.querySelector('input[type="tel"]');
+  const addressInput = document.querySelector("textarea");
+  const deliveryInput = document.querySelector(
     'input[name="delivery"]:checked'
-  )?.value;
-  const quantity = parseInt(document.getElementById("quantity").value);
-  const total = parseInt(document.getElementById("total-price").textContent);
+  );
+  const quantityInput = document.getElementById("quantity");
+  const totalInput = document.getElementById("total-price");
+
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const address = addressInput.value.trim();
+  const delivery = deliveryInput?.value;
+  const quantity = parseInt(quantityInput.value);
+  const total = parseInt(totalInput.textContent);
 
   if (!name || !email || !phone || !address || !delivery || quantity < 1) {
     alert("অনুগ্রহ করে সব ফিল্ড পূরণ করুন।");
@@ -113,6 +121,22 @@ function confirmOrder() {
   );
   console.log("পরিমাণ:", quantity);
   console.log("মোট মূল্য:", total);
+
+  // Show modal
+  document.getElementById("orderSuccessModal").classList.remove("hidden");
+
+  // Reset form after short delay
+  setTimeout(() => {
+    nameInput.value = "";
+    emailInput.value = "";
+    phoneInput.value = "";
+    addressInput.value = "";
+    quantityInput.value = "1";
+    document
+      .querySelectorAll('input[name="delivery"]')
+      .forEach((radio) => (radio.checked = false));
+    updateTotal(); // Optional: recalculate total based on reset quantity
+  }, 500);
 }
 
 window.onload = () => {
