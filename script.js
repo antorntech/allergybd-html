@@ -59,6 +59,32 @@ const shippingPrices = {
   outside: 100,
 };
 
+async function loadDistricts() {
+  const res = await fetch("bd-districts.json");
+  const data = await res.json();
+  const districtSelect = document.getElementById("district");
+  districtSelect.innerHTML = '<option value="">জেলা খুজুন</option>';
+  data?.districts?.forEach((item) => {
+    const option = document.createElement("option");
+    option.value = item.bn_name;
+    option.textContent = item.bn_name;
+    districtSelect.appendChild(option);
+  });
+}
+
+async function loadUpazilas(districtId) {
+  const upazilaSelect = document.getElementById("upazila");
+  upazilaSelect.innerHTML = '<option value="">উপজেলা খুজুন</option>';
+  const res = await fetch("bd-upazilas.json");
+  const data = await res.json();
+  data?.upazilas?.forEach((item) => {
+    const option = document.createElement("option");
+    option.value = item.bn_name;
+    option.textContent = item.bn_name;
+    upazilaSelect.appendChild(option);
+  });
+}
+
 function updateQuantity(change) {
   const qtyInput = document.getElementById("quantity");
   let currentQty = parseInt(qtyInput.value) || 1;
@@ -67,6 +93,11 @@ function updateQuantity(change) {
   qtyInput.value = currentQty;
   updateTotalPrice();
 }
+
+// Auto update when delivery selected
+document.querySelectorAll('input[name="delivery"]').forEach((radio) => {
+  radio.addEventListener("change", updateTotalPrice);
+});
 
 function updateTotalPrice() {
   const qty = parseInt(document.getElementById("quantity").value);
@@ -87,58 +118,63 @@ document.querySelectorAll('input[name="delivery"]').forEach((radio) => {
 });
 
 function confirmOrder() {
-  const nameInput = document.querySelector('input[placeholder="নাম"]');
-  const emailInput = document.querySelector('input[type="email"]');
-  const phoneInput = document.querySelector('input[type="tel"]');
-  const addressInput = document.querySelector("textarea");
-  const deliveryInput = document.querySelector(
+  const name = document.querySelector('input[placeholder="নাম"]').value.trim();
+  const email = document.querySelector('input[type="email"]').value.trim();
+  const phone = document.querySelector('input[type="tel"]').value.trim();
+  const address = document.querySelector("textarea").value.trim();
+  const delivery = document.querySelector(
     'input[name="delivery"]:checked'
-  );
-  const quantityInput = document.getElementById("quantity");
-  const totalInput = document.getElementById("total-price");
+  )?.value;
+  const quantity = parseInt(document.getElementById("quantity").value);
 
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const phone = phoneInput.value.trim();
-  const address = addressInput.value.trim();
-  const delivery = deliveryInput?.value;
-  const quantity = parseInt(quantityInput.value);
-  const total = parseInt(totalInput.textContent);
+  const district = document.getElementById("district").value;
+  const upazila = document.getElementById("upazila").value;
 
-  if (!name || !email || !phone || !address || !delivery || quantity < 1) {
+  if (
+    !name ||
+    !email ||
+    !phone ||
+    !address ||
+    !delivery ||
+    quantity < 1 ||
+    !district ||
+    !upazila
+  ) {
     alert("অনুগ্রহ করে সব ফিল্ড পূরণ করুন।");
     return;
   }
 
   console.log("অর্ডার ডিটেইলস:");
-  console.log("নাম:", name);
-  console.log("ইমেইল:", email);
-  console.log("ফোন:", phone);
-  console.log("ঠিকানা:", address);
-  console.log(
-    "ডেলিভারি:",
-    delivery === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাহিরে"
-  );
-  console.log("পরিমাণ:", quantity);
-  console.log("মোট মূল্য:", total);
+  console.log(`নাম: ${name}`);
+  console.log(`ইমেইল: ${email}`);
+  console.log(`ফোন নম্বর: ${phone}`);
+  console.log(`ঠিকানা: ${address}`);
+  console.log(`জেলা: ${district}`);
+  console.log(`উপজেলা: ${upazila}`);
+  console.log(`ডেলিভারি: ${delivery}`);
+  console.log(`পরিমাণ: ${quantity}`);
 
   // Show modal
   document.getElementById("orderSuccessModal").classList.remove("hidden");
 
-  // Reset form after short delay
-  setTimeout(() => {
-    nameInput.value = "";
-    emailInput.value = "";
-    phoneInput.value = "";
-    addressInput.value = "";
-    quantityInput.value = "1";
-    document
-      .querySelectorAll('input[name="delivery"]')
-      .forEach((radio) => (radio.checked = false));
-    updateTotal(); // Optional: recalculate total based on reset quantity
-  }, 500);
+  // Reset form
+  document.querySelector('input[placeholder="নাম"]').value = "";
+  document.querySelector('input[type="email"]').value = "";
+  document.querySelector('input[type="tel"]').value = "";
+  document.querySelector("textarea").value = "";
+  document.getElementById("quantity").value = 1;
+  document.getElementById("district").selectedIndex = 0;
+  document.getElementById("upazila").innerHTML =
+    '<option value="">উপজেলা খুজুন</option>';
+  document
+    .querySelectorAll('input[name="delivery"]')
+    .forEach((el) => (el.checked = false));
+  document.getElementById("shipping-cost").textContent = "0";
+  updateTotalPrice();
 }
 
 window.onload = () => {
   initializeSwiper();
+  loadDistricts();
+  loadUpazilas();
 };
