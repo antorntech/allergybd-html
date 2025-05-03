@@ -53,40 +53,12 @@ function initializeSwiper() {
   });
 }
 
+// Order Functionality
 const unitPrice = 990;
 const shippingPrices = {
   inside: 50,
   outside: 100,
 };
-
-// async function loadDistricts() {
-//   const res = await fetch("bd-districts.json");
-//   const data = await res.json();
-//   const districtSelect = document.getElementById("district");
-//   districtSelect.innerHTML = '<option value="">জেলা খুজুন</option>';
-//   data?.districts?.forEach((item) => {
-//     const option = document.createElement("option");
-//     option.value = item.id;
-//     option.textContent = item.bn_name;
-//     districtSelect.appendChild(option);
-//   });
-// }
-
-// async function loadUpazilas(districtId) {
-//   const upazilaSelect = document.getElementById("upazila");
-//   upazilaSelect.innerHTML = '<option value="">উপজেলা খুজুন</option>';
-//   const res = await fetch("bd-upazilas.json");
-//   const data = await res.json();
-//   const filtered = data?.upazilas?.filter(
-//     (item) => item.district_id === districtId
-//   );
-//   filtered.forEach((item) => {
-//     const option = document.createElement("option");
-//     option.value = item.id;
-//     option.textContent = item.bn_name;
-//     upazilaSelect.appendChild(option);
-//   });
-// }
 
 let allDistricts = [];
 let allUpazilas = [];
@@ -170,68 +142,6 @@ function updateTotalPrice() {
 document.querySelectorAll('input[name="delivery"]').forEach((radio) => {
   radio.addEventListener("change", updateTotalPrice);
 });
-
-// function confirmOrder() {
-//   const name = document.querySelector('input[placeholder="নাম"]').value.trim();
-//   const email = document.querySelector('input[type="email"]').value.trim();
-//   const phone = document.querySelector('input[type="tel"]').value.trim();
-//   const address = document.querySelector("textarea").value.trim();
-//   const delivery = document.querySelector(
-//     'input[name="delivery"]:checked'
-//   )?.value;
-//   const quantity = parseInt(document.getElementById("quantity").value);
-
-//   const districtId = document.getElementById("district").value;
-//   const upazilaId = document.getElementById("upazila").value;
-
-//   const selectedDistrict = allDistricts.find((d) => d.id === districtId);
-//   const selectedUpazila = allUpazilas.find((u) => u.id === upazilaId);
-
-//   const districtName = selectedDistrict?.name || "";
-//   const upazilaName = selectedUpazila?.name || "";
-
-//   if (
-//     !name ||
-//     !email ||
-//     !phone ||
-//     !address ||
-//     !delivery ||
-//     quantity < 1 ||
-//     !districtName ||
-//     !upazilaName
-//   ) {
-//     alert("অনুগ্রহ করে সব ফিল্ড পূরণ করুন।");
-//     return;
-//   }
-
-//   console.log("অর্ডার ডিটেইলস:");
-//   console.log(`নাম: ${name}`);
-//   console.log(`ইমেইল: ${email}`);
-//   console.log(`ফোন নম্বর: ${phone}`);
-//   console.log(`ঠিকানা: ${address}`);
-//   console.log(`জেলা: ${districtName}`);
-//   console.log(`উপজেলা: ${upazilaName}`);
-//   console.log(`ডেলিভারি: ${delivery}`);
-//   console.log(`পরিমাণ: ${quantity}`);
-
-//   // Show modal
-//   document.getElementById("orderSuccessModal").classList.remove("hidden");
-
-//   // Reset form
-//   document.querySelector('input[placeholder="নাম"]').value = "";
-//   document.querySelector('input[type="email"]').value = "";
-//   document.querySelector('input[type="tel"]').value = "";
-//   document.querySelector("textarea").value = "";
-//   document.getElementById("quantity").value = 1;
-//   document.getElementById("district").selectedIndex = 0;
-//   document.getElementById("upazila").innerHTML =
-//     '<option value="">উপজেলা খুজুন</option>';
-//   document
-//     .querySelectorAll('input[name="delivery"]')
-//     .forEach((el) => (el.checked = false));
-//   document.getElementById("shipping-cost").textContent = "0";
-//   updateTotalPrice();
-// }
 
 async function confirmOrder() {
   const name = document.querySelector('input[placeholder="নাম"]').value.trim();
@@ -321,8 +231,55 @@ async function confirmOrder() {
   }
 }
 
+// Faqs Functionality
+async function loadFAQs() {
+  try {
+    const res = await fetch("faqs.json");
+    const faqs = await res.json();
+    const container = document.getElementById("faq-container");
+    container.innerHTML = "";
+
+    faqs.forEach((faq, index) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "border rounded overflow-hidden";
+
+      wrapper.innerHTML = `
+          <button onclick="toggleFAQ(${index})"
+            class="w-full flex justify-between items-center text-left p-4 font-semibold bg-gray-100 hover:bg-gray-200 transition duration-300"
+          >
+            <span>${faq.question}</span>
+            <i id="icon-${index}" class="fas fa-chevron-down transform transition-all duration-300 text-lg"></i>
+          </button>
+          <div id="answer-${index}" class="px-4 max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out">
+            <p class="py-4 text-gray-700">${faq.answer}</p>
+          </div>
+        `;
+      container.appendChild(wrapper);
+    });
+  } catch (err) {
+    console.error("FAQ load error:", err);
+  }
+}
+
+function toggleFAQ(index) {
+  const answer = document.getElementById(`answer-${index}`);
+  const icon = document.getElementById(`icon-${index}`);
+  const isOpen = answer.classList.contains("max-h-40");
+
+  if (isOpen) {
+    answer.classList.remove("max-h-40", "opacity-100");
+    answer.classList.add("max-h-0", "opacity-0");
+    icon.classList.remove("rotate-180", "scale-125");
+  } else {
+    answer.classList.remove("max-h-0", "opacity-0");
+    answer.classList.add("max-h-40", "opacity-100");
+    icon.classList.add("rotate-180", "scale-125");
+  }
+}
+
 window.onload = () => {
   initializeSwiper();
+  loadFAQs();
   loadDistricts();
   loadUpazilas();
 };
