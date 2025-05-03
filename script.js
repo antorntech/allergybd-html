@@ -59,14 +59,49 @@ const shippingPrices = {
   outside: 100,
 };
 
+// async function loadDistricts() {
+//   const res = await fetch("bd-districts.json");
+//   const data = await res.json();
+//   const districtSelect = document.getElementById("district");
+//   districtSelect.innerHTML = '<option value="">জেলা খুজুন</option>';
+//   data?.districts?.forEach((item) => {
+//     const option = document.createElement("option");
+//     option.value = item.id;
+//     option.textContent = item.bn_name;
+//     districtSelect.appendChild(option);
+//   });
+// }
+
+// async function loadUpazilas(districtId) {
+//   const upazilaSelect = document.getElementById("upazila");
+//   upazilaSelect.innerHTML = '<option value="">উপজেলা খুজুন</option>';
+//   const res = await fetch("bd-upazilas.json");
+//   const data = await res.json();
+//   const filtered = data?.upazilas?.filter(
+//     (item) => item.district_id === districtId
+//   );
+//   filtered.forEach((item) => {
+//     const option = document.createElement("option");
+//     option.value = item.id;
+//     option.textContent = item.bn_name;
+//     upazilaSelect.appendChild(option);
+//   });
+// }
+
+let allDistricts = [];
+let allUpazilas = [];
+
 async function loadDistricts() {
   const res = await fetch("bd-districts.json");
   const data = await res.json();
+  allDistricts = data?.districts || [];
+
   const districtSelect = document.getElementById("district");
   districtSelect.innerHTML = '<option value="">জেলা খুজুন</option>';
-  data?.districts?.forEach((item) => {
+
+  allDistricts.forEach((item) => {
     const option = document.createElement("option");
-    option.value = item.bn_name;
+    option.value = item.id;
     option.textContent = item.bn_name;
     districtSelect.appendChild(option);
   });
@@ -75,11 +110,30 @@ async function loadDistricts() {
 async function loadUpazilas(districtId) {
   const upazilaSelect = document.getElementById("upazila");
   upazilaSelect.innerHTML = '<option value="">উপজেলা খুজুন</option>';
-  const res = await fetch("bd-upazilas.json");
-  const data = await res.json();
-  data?.upazilas?.forEach((item) => {
+
+  // Disable if district is not selected
+  if (!districtId) {
+    upazilaSelect.disabled = true;
+    return;
+  }
+
+  // Enable if a district is selected
+  upazilaSelect.disabled = false;
+
+  // Load upazilas if not already loaded
+  if (allUpazilas.length === 0) {
+    const res = await fetch("bd-upazilas.json");
+    const data = await res.json();
+    allUpazilas = data?.upazilas || [];
+  }
+
+  const filtered = allUpazilas.filter(
+    (item) => item.district_id === districtId
+  );
+
+  filtered.forEach((item) => {
     const option = document.createElement("option");
-    option.value = item.bn_name;
+    option.value = item.id;
     option.textContent = item.bn_name;
     upazilaSelect.appendChild(option);
   });
@@ -127,8 +181,14 @@ function confirmOrder() {
   )?.value;
   const quantity = parseInt(document.getElementById("quantity").value);
 
-  const district = document.getElementById("district").value;
-  const upazila = document.getElementById("upazila").value;
+  const districtId = document.getElementById("district").value;
+  const upazilaId = document.getElementById("upazila").value;
+
+  const selectedDistrict = allDistricts.find((d) => d.id === districtId);
+  const selectedUpazila = allUpazilas.find((u) => u.id === upazilaId);
+
+  const districtName = selectedDistrict?.name || "";
+  const upazilaName = selectedUpazila?.name || "";
 
   if (
     !name ||
@@ -137,8 +197,8 @@ function confirmOrder() {
     !address ||
     !delivery ||
     quantity < 1 ||
-    !district ||
-    !upazila
+    !districtName ||
+    !upazilaName
   ) {
     alert("অনুগ্রহ করে সব ফিল্ড পূরণ করুন।");
     return;
@@ -149,8 +209,8 @@ function confirmOrder() {
   console.log(`ইমেইল: ${email}`);
   console.log(`ফোন নম্বর: ${phone}`);
   console.log(`ঠিকানা: ${address}`);
-  console.log(`জেলা: ${district}`);
-  console.log(`উপজেলা: ${upazila}`);
+  console.log(`জেলা: ${districtName}`);
+  console.log(`উপজেলা: ${upazilaName}`);
   console.log(`ডেলিভারি: ${delivery}`);
   console.log(`পরিমাণ: ${quantity}`);
 
