@@ -171,15 +171,80 @@ document.querySelectorAll('input[name="delivery"]').forEach((radio) => {
   radio.addEventListener("change", updateTotalPrice);
 });
 
-function confirmOrder() {
+// function confirmOrder() {
+//   const name = document.querySelector('input[placeholder="নাম"]').value.trim();
+//   const email = document.querySelector('input[type="email"]').value.trim();
+//   const phone = document.querySelector('input[type="tel"]').value.trim();
+//   const address = document.querySelector("textarea").value.trim();
+//   const delivery = document.querySelector(
+//     'input[name="delivery"]:checked'
+//   )?.value;
+//   const quantity = parseInt(document.getElementById("quantity").value);
+
+//   const districtId = document.getElementById("district").value;
+//   const upazilaId = document.getElementById("upazila").value;
+
+//   const selectedDistrict = allDistricts.find((d) => d.id === districtId);
+//   const selectedUpazila = allUpazilas.find((u) => u.id === upazilaId);
+
+//   const districtName = selectedDistrict?.name || "";
+//   const upazilaName = selectedUpazila?.name || "";
+
+//   if (
+//     !name ||
+//     !email ||
+//     !phone ||
+//     !address ||
+//     !delivery ||
+//     quantity < 1 ||
+//     !districtName ||
+//     !upazilaName
+//   ) {
+//     alert("অনুগ্রহ করে সব ফিল্ড পূরণ করুন।");
+//     return;
+//   }
+
+//   console.log("অর্ডার ডিটেইলস:");
+//   console.log(`নাম: ${name}`);
+//   console.log(`ইমেইল: ${email}`);
+//   console.log(`ফোন নম্বর: ${phone}`);
+//   console.log(`ঠিকানা: ${address}`);
+//   console.log(`জেলা: ${districtName}`);
+//   console.log(`উপজেলা: ${upazilaName}`);
+//   console.log(`ডেলিভারি: ${delivery}`);
+//   console.log(`পরিমাণ: ${quantity}`);
+
+//   // Show modal
+//   document.getElementById("orderSuccessModal").classList.remove("hidden");
+
+//   // Reset form
+//   document.querySelector('input[placeholder="নাম"]').value = "";
+//   document.querySelector('input[type="email"]').value = "";
+//   document.querySelector('input[type="tel"]').value = "";
+//   document.querySelector("textarea").value = "";
+//   document.getElementById("quantity").value = 1;
+//   document.getElementById("district").selectedIndex = 0;
+//   document.getElementById("upazila").innerHTML =
+//     '<option value="">উপজেলা খুজুন</option>';
+//   document
+//     .querySelectorAll('input[name="delivery"]')
+//     .forEach((el) => (el.checked = false));
+//   document.getElementById("shipping-cost").textContent = "0";
+//   updateTotalPrice();
+// }
+
+async function confirmOrder() {
   const name = document.querySelector('input[placeholder="নাম"]').value.trim();
-  const email = document.querySelector('input[type="email"]').value.trim();
   const phone = document.querySelector('input[type="tel"]').value.trim();
   const address = document.querySelector("textarea").value.trim();
   const delivery = document.querySelector(
     'input[name="delivery"]:checked'
   )?.value;
   const quantity = parseInt(document.getElementById("quantity").value);
+  const unitPrice = parseInt(document.getElementById("unit-price").textContent);
+  const shippingCost = parseInt(
+    document.getElementById("shipping-cost").textContent
+  );
 
   const districtId = document.getElementById("district").value;
   const upazilaId = document.getElementById("upazila").value;
@@ -192,7 +257,6 @@ function confirmOrder() {
 
   if (
     !name ||
-    !email ||
     !phone ||
     !address ||
     !delivery ||
@@ -204,33 +268,57 @@ function confirmOrder() {
     return;
   }
 
-  console.log("অর্ডার ডিটেইলস:");
-  console.log(`নাম: ${name}`);
-  console.log(`ইমেইল: ${email}`);
-  console.log(`ফোন নম্বর: ${phone}`);
-  console.log(`ঠিকানা: ${address}`);
-  console.log(`জেলা: ${districtName}`);
-  console.log(`উপজেলা: ${upazilaName}`);
-  console.log(`ডেলিভারি: ${delivery}`);
-  console.log(`পরিমাণ: ${quantity}`);
+  const totalPrice = unitPrice * quantity + shippingCost;
 
-  // Show modal
-  document.getElementById("orderSuccessModal").classList.remove("hidden");
+  const payload = {
+    name,
+    phone,
+    district: districtName,
+    upazila: upazilaName,
+    street: address,
+    price: totalPrice,
+    quantity,
+    shipping_cost: shippingCost,
+    coupon: "",
+  };
 
-  // Reset form
-  document.querySelector('input[placeholder="নাম"]').value = "";
-  document.querySelector('input[type="email"]').value = "";
-  document.querySelector('input[type="tel"]').value = "";
-  document.querySelector("textarea").value = "";
-  document.getElementById("quantity").value = 1;
-  document.getElementById("district").selectedIndex = 0;
-  document.getElementById("upazila").innerHTML =
-    '<option value="">উপজেলা খুজুন</option>';
-  document
-    .querySelectorAll('input[name="delivery"]')
-    .forEach((el) => (el.checked = false));
-  document.getElementById("shipping-cost").textContent = "0";
-  updateTotalPrice();
+  try {
+    const res = await fetch("https://order.allergyjom.shop/api/v1/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      alert("অর্ডার ব্যর্থ হয়েছে: " + (error?.message || "অনির্দিষ্ট সমস্যা"));
+      return;
+    }
+
+    // Show success modal
+    document.getElementById("orderSuccessModal").classList.remove("hidden");
+
+    // Reset form
+    document.querySelector('input[placeholder="নাম"]').value = "";
+    document.querySelector('input[type="email"]').value = "";
+    document.querySelector('input[type="tel"]').value = "";
+    document.querySelector("textarea").value = "";
+    document.getElementById("quantity").value = 1;
+    document.getElementById("district").selectedIndex = 0;
+    document.getElementById("upazila").innerHTML =
+      '<option value="">উপজেলা খুজুন</option>';
+    document.getElementById("upazila").disabled = true;
+    document
+      .querySelectorAll('input[name="delivery"]')
+      .forEach((el) => (el.checked = false));
+    document.getElementById("shipping-cost").textContent = "0";
+    updateTotalPrice();
+  } catch (err) {
+    alert("অর্ডার প্রক্রিয়া করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+    console.error("Order Error:", err);
+  }
 }
 
 window.onload = () => {
