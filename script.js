@@ -1,3 +1,10 @@
+function formatQuantity(price) {
+  return new Intl.NumberFormat('bn-BD', {
+    style: 'number',
+    minimumFractionDigits: 2
+  }).format(price);
+}
+
 function initializeSwiper() {
   const images = [
     "/assets/images/reviews/1.png",
@@ -120,26 +127,21 @@ function updateQuantity(change) {
   updateTotalPrice();
 }
 
-// Auto update when delivery selected
-document.querySelectorAll('input[name="delivery"]').forEach((radio) => {
+// Auto update when shipping_cost selected
+document.querySelectorAll('input[name="shipping_cost"]').forEach((radio) => {
   radio.addEventListener("change", updateTotalPrice);
 });
 
-function updateTotalPrice() {
+function updateTotalPrice(e) {
   const qty = parseInt(document.getElementById("quantity").value);
-  const delivery = document.querySelector(
-    'input[name="delivery"]:checked'
-  )?.value;
+  const shipping_cost = parseInt(e.target.value || 50)
 
-  const shippingCost = delivery ? shippingPrices[delivery] : 0;
-  document.getElementById("shipping-cost").textContent = shippingCost;
-
-  const total = qty * unitPrice + shippingCost;
+  const total = qty * unitPrice + shipping_cost;
   document.getElementById("total-price").textContent = total;
 }
 
-// Auto update when delivery selected
-document.querySelectorAll('input[name="delivery"]').forEach((radio) => {
+// Auto update when shipping_cost selected
+document.querySelectorAll('input[name="shipping_cost"]').forEach((radio) => {
   radio.addEventListener("change", updateTotalPrice);
 });
 
@@ -147,8 +149,8 @@ async function confirmOrder() {
   const name = document.querySelector('input[placeholder="নাম"]').value.trim();
   const phone = document.querySelector('input[type="tel"]').value.trim();
   const address = document.querySelector("textarea").value.trim();
-  const delivery = document.querySelector(
-    'input[name="delivery"]:checked'
+  const shipping_cost = document.querySelector(
+    'input[name="shipping_cost"]:checked'
   )?.value;
   const quantity = parseInt(document.getElementById("quantity").value);
   const unitPrice = parseInt(document.getElementById("unit-price").textContent);
@@ -169,7 +171,7 @@ async function confirmOrder() {
     !name ||
     !phone ||
     !address ||
-    !delivery ||
+    !shipping_cost ||
     quantity < 1 ||
     !districtName ||
     !upazilaName
@@ -221,7 +223,7 @@ async function confirmOrder() {
       '<option value="">উপজেলা খুজুন</option>';
     document.getElementById("upazila").disabled = true;
     document
-      .querySelectorAll('input[name="delivery"]')
+      .querySelectorAll('input[name="shipping_cost"]')
       .forEach((el) => (el.checked = false));
     document.getElementById("shipping-cost").textContent = "0";
     updateTotalPrice();
