@@ -35,16 +35,18 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://kit.fontawesome.com/a8717e94fb.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Google Fonts: Playfair Display -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
 </head>
 
 <body class="font-sans">
   <header class="bg-white/90 backdrop-blur sticky top-0 h-16 z-[11]">
     <div class="container h-full flex justify-between items-center">
       <a href="tel:01812345678" class="hidden lg:inline">
-        <button type="button"
-          class="bg-primary-500 text-white px-4 py-2 rounded hover:bg-primary-700 hover:text-white shadow-md transition">
-          <i class="fas fa-phone mr-2"></i>
-          কল করুন
+        <button type="button" class="btn primary">
+          <i class="fas fa-phone mr-2"></i>কল করুন
         </button>
       </a>
 
@@ -55,8 +57,7 @@
       </div>
 
       <div>
-        <a href="#order"
-          class="bg-primary-500 text-white px-4 py-2 rounded hover:bg-primary-700 hover:text-white shadow-md transition">
+        <a href="#order" class="btn primary">
           <i class="fas fa-shopping-cart mr-2"></i>অর্ডার করুন
         </a>
       </div>
@@ -71,15 +72,10 @@
           <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style="line-height: 1.2">
             সেরা পণ্য এখন আপনার দোরগোড়ায়!
           </h1>
-          <p class="text-gray-600 mb-8">
-            সম্পূর্ন প্রাকৃতিকভাবে স্থায়ীভাবে নির্মূল করুণ
-            এলার্জি,চুলকানি,দাউদ,সোরিয়াস,এজমা, শ্বাষকষ্ট কিংবা এলার্জি জনিত
-            যেকোনো সমস্যা
+          <p class="mb-8">
+            সম্পূর্ন প্রাকৃতিকভাবে স্থায়ীভাবে নির্মূল করুণ এলার্জি, চুলকানি, দাউদ, সোরিয়াস, এজমা, শ্বাষকষ্ট কিংবা এলার্জি জনিত যেকোনো সমস্যা
           </p>
-          <a href="#order"
-            class="bg-primary-500 text-white px-6 py-3 rounded hover:bg-primary-700 hover:text-white shadow-md transition">
-            এখনই অর্ডার করুন
-          </a>
+          <a href="#order" class="btn primary inline-block">এখনই অর্ডার করুন</a>
         </div>
         <div class="md:w-1/3 grow mt-8 md:mt-0">
           <img src="product.jpg" alt="প্রোডাক্ট ছবি" class="w-full h-auto object-contain" />
@@ -101,8 +97,8 @@
           <img src="/assets/images/offers/motobike.jpg" alt="মোটরবাইক" class="h-60 lg:h-80 object-contain rounded-xl">
         </div>
         <div class="w-full grow text-center md:text-left">
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">🏍️ মোটরবাইক</h3>
-          <p class="text-gray-600">স্বপ্নের বাইক জয়ের সুযোগ পেতে আজই অংশ নিন।</p>
+          <h3 class="text-xl font-semibold mb-2">🏍️ মোটরবাইক</h3>
+          <p class="">স্বপ্নের বাইক জয়ের সুযোগ পেতে আজই অংশ নিন।</p>
         </div>
       </div>
 
@@ -113,8 +109,8 @@
           <img src="/assets/images/offers/haj.jpg" alt="হজ্ব" class="h-60 lg:h-80 object-contain rounded-xl">
         </div>
         <div class="w-full grow text-center md:text-left lg:order-1">
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">🕋 ২ জনের হজ্ব</h3>
-          <p class="text-gray-600">আপনার ও আপনার প্রিয়জনের জন্য পূর্ণ স্পন্সর হজ্ব।</p>
+          <h3 class="text-xl font-semibold mb-2">🕋 ২ জনের হজ্ব</h3>
+          <p class="">আপনার ও আপনার প্রিয়জনের জন্য পূর্ণ স্পন্সর হজ্ব।</p>
         </div>
       </div>
 
@@ -125,15 +121,14 @@
           <img src="/assets/images/offers/freeze.jpg" alt="ফ্রিজ" class="h-60 lg:h-80 object-contain rounded-xl">
         </div>
         <div class="w-full grow text-center md:text-left">
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">🧊 ফ্রিজ</h3>
-          <p class="text-gray-600">জিতে নিন ব্র্যান্ড নিউ ফ্রিজ — আধুনিক ও শক্তি-সাশ্রয়ী।</p>
+          <h3 class="text-xl font-semibold mb-2">🧊 ফ্রিজ</h3>
+          <p class="">জিতে নিন ব্র্যান্ড নিউ ফ্রিজ — আধুনিক ও শক্তি-সাশ্রয়ী।</p>
         </div>
       </div>
     </div>
 
-    <div class="container text-center mt-10">
-      <a href="#order"
-        class="bg-primary-500 text-white px-4 py-2 rounded hover:bg-primary-700 hover:text-white shadow-md transition">
+    <div class="container text-center mt-10 flex justify-center">
+      <a href="#order" class="btn primary">
         <i class="fas fa-shopping-cart mr-2"></i>অর্ডার করুন
       </a>
     </div>
@@ -143,28 +138,26 @@
   <section class="bg-gray-100">
     <div class="container">
       <div class="space-y-2 mb-8 md:mb-12">
-        <h2 class="text-2xl md:text-3xl font-bold text-center">
-          আমাদের বৈশিষ্ট্য
-        </h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-center">আমাদের বৈশিষ্ট্য</h2>
         <div class="w-16 md:w-24 h-1 mx-auto bg-primary-500"></div>
       </div>
       <div class="grid md:grid-cols-3 gap-6 text-center">
         <div>
           <i class="fas fa-truck text-[#83A64C] text-4xl mb-4"></i>
           <h3 class="font-semibold text-lg mb-2">দ্রুত ডেলিভারি</h3>
-          <p class="text-gray-600">
+          <p class="">
             সারা দেশে ৩ দিনের মধ্যে পণ্য পৌঁছে দেওয়া হয়।
           </p>
         </div>
         <div>
           <i class="fas fa-lock text-[#83A64C] text-4xl mb-4"></i>
           <h3 class="font-semibold text-lg mb-2">নিরাপদ লেনদেন</h3>
-          <p class="text-gray-600">আপনার তথ্য ১০০% নিরাপদে রাখা হয়।</p>
+          <p class="">আপনার তথ্য ১০০% নিরাপদে রাখা হয়।</p>
         </div>
         <div>
           <i class="fas fa-thumbs-up text-[#83A64C] text-4xl mb-4"></i>
           <h3 class="font-semibold text-lg mb-2">মানসম্পন্ন পণ্য</h3>
-          <p class="text-gray-600">আমরা দিই যাচাইকৃত প্রিমিয়াম প্রোডাক্ট।</p>
+          <p class="">আমরা দিই যাচাইকৃত প্রিমিয়াম প্রোডাক্ট।</p>
         </div>
       </div>
     </div>
@@ -174,9 +167,7 @@
   <section id="faq" class="bg-white py-12">
     <div class="container max-w-4xl mx-auto px-4">
       <div class="space-y-2 mb-8 md:mb-12">
-        <h2 class="text-2xl md:text-3xl font-bold text-center">
-          প্রায়শই জিজ্ঞাসিত প্রশ্ন
-        </h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-center">প্রায়শই জিজ্ঞাসিত প্রশ্ন</h2>
         <div class="w-16 md:w-24 h-1 mx-auto bg-primary-500"></div>
       </div>
       <div id="faq-container" class="space-y-4">
@@ -190,9 +181,7 @@
     <div class="max-w-6xl mx-auto px-4">
       <!-- Section Title -->
       <div class="space-y-2 mb-8 md:mb-12">
-        <h2 class="text-2xl md:text-3xl font-bold text-center">
-          কাস্টমার রিভিউ
-        </h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-center">কাস্টমার রিভিউ</h2>
         <div class="w-16 md:w-24 h-1 mx-auto bg-primary-500"></div>
       </div>
 
@@ -217,9 +206,9 @@
         <h2 class="text-2xl md:text-3xl font-bold text-center">অর্ডার করুন</h2>
         <div class="w-16 md:w-24 h-1 mx-auto bg-primary-500"></div>
       </div>
-      <form class="container lg:max-w-6xl mx-auto grid xl:grid-cols-3 gap-8" id="orderForm">
+      <form class="container lg:max-w-6xl mx-auto grid xl:grid-cols-3 gap-4 lg:gap-6" id="orderForm">
         <!-- Left: Personal Info -->
-        <div class="lg:col-span-2 bg-white p-4 lg:p-6 rounded shadow space-y-2 lg:space-y-4">
+        <div class="lg:col-span-2 bg-white p-4 lg:p-6 rounded-xl shadow-2xl space-y-2 lg:space-y-4">
           <h3 class="text-xl font-semibold mb-4">কাস্টমার তথ্য</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="space-y-2">
@@ -308,12 +297,12 @@
 
         <!-- Right: Order Summary -->
         <div class="flex items-start">
-          <div class="bg-white p-6 rounded shadow">
+          <div class="bg-white p-4 lg:p-6 rounded-xl shadow-2xl">
             <div class="flex items-start space-x-4 mb-4">
               <img src="product.jpg" alt="product" class="w-24 h-24 rounded" />
               <div class="flex-1">
                 <h4 class="font-semibold">অর্গানিক এলার্জি রিমুভাল</h4>
-                <p class="text-sm text-gray-600">৩ দিনের মধ্যে ডেলিভারি</p>
+                <p class="text-sm ">৩ দিনের মধ্যে ডেলিভারি</p>
 
                 <div class="flex items-end justify-between mt-2">
                   <!-- Quantity Control -->
@@ -333,7 +322,7 @@
               </div>
             </div>
 
-            <div class="text-sm text-gray-600 border-t pt-4 mt-4">
+            <div class="text-sm  border-t pt-4 mt-4">
               <p>
                 প্রোমো কোড আছে?
                 <a href="#" class="text-blue-500 hover:underline">এখানে ক্লিক করুন</a>
@@ -348,7 +337,7 @@
               <span>মোট</span><span>৳ <span id="total-price">990.00</span></span>
             </div>
 
-            <button class="mt-6 w-full bg-primary-500 text-white py-3 rounded hover:bg-primary-700 transition">
+            <button class="btn primary w-full mt-4">
               <i class="fas fa-credit-card mr-2"></i> Confirm Order
             </button>
           </div>
@@ -386,10 +375,9 @@
           };
         }
       </script>
-      <button type="button" onclick="resetForm(this)"
-        class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-        ঠিক আছে
-      </button>
+      <div class="flex justify-center">
+        <button type="button" onclick="resetForm(this)" class="btn primary">ঠিক আছে</button>
+      </div>
     </div>
   </div>
 
