@@ -166,7 +166,7 @@
         <h2 class="text-2xl md:text-3xl font-bold text-center">অর্ডার করুন</h2>
         <div class="w-16 md:w-24 h-1 mx-auto bg-primary-500"></div>
       </div>
-      <div class="container lg:max-w-6xl mx-auto grid xl:grid-cols-3 gap-8">
+      <form class="container lg:max-w-6xl mx-auto grid xl:grid-cols-3 gap-8" id="orderForm">
         <!-- Left: Personal Info -->
         <div class="lg:col-span-2 bg-white p-4 lg:p-6 rounded shadow space-y-2 lg:space-y-4">
           <h3 class="text-xl font-semibold mb-4">কাস্টমার তথ্য</h3>
@@ -175,24 +175,28 @@
               <div>
                 <label class="block font-semibold mb-1">কাস্টমারের নাম
                   <span class="text-red-500 text-lg">*</span></label>
-                <input type="text" class="w-full border border-gray-300 p-2 rounded" placeholder="নাম" />
+                <input required type="text" name="name" class="w-full border border-gray-300 p-2 rounded"
+                  placeholder="নাম" />
               </div>
               <div>
                 <label class="block font-semibold mb-1">ইমেইল <span class="text-red-500 text-lg">*</span></label>
-                <input type="email" class="w-full border border-gray-300 p-2 rounded" placeholder="example@email.com" />
+                <input type="email" name="email" class="w-full border border-gray-300 p-2 rounded"
+                  placeholder="example@email.com" title="Enter your name" />
               </div>
               <div>
-                <label class="block font-semibold mb-1">মোবাইল নাম্বার
-                  <span class="text-red-500 text-lg">*</span></label>
-                <input type="tel" name="phone" class="w-full border border-gray-300 p-2 rounded"
-                  placeholder="01XXXXXXXXX" minlength="11" maxlength="11" title="Should 11 character" />
+                <label class="block font-semibold mb-1">মোবাইল নাম্বার<span
+                    class="text-red-500 text-lg">*</span></label>
+                <input required type="tel" name="phone" class="w-full border border-gray-300 p-2 rounded"
+                  placeholder="01XXXXXXXXX" minlength="11" maxlength="11"
+                  title="Should 11 characters & start with 013,014,015,016,017,018,019"
+                  pattern="^(013|014|015|016|017|018|019)\d{8}$" />
               </div>
             </div>
             <div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label class="block font-semibold mb-1">জেলা <span class="text-red-500 text-lg">*</span></label>
-                  <select id="district" class="w-full border border-gray-300 p-2 rounded"
+                  <select required id="district" name="district" class="w-full border border-gray-300 p-2 rounded"
                     onchange="loadUpazilas(this.value)">
                     <option value="">জেলা খুজুন</option>
                   </select>
@@ -201,26 +205,29 @@
                 <!-- New Upazila Dropdown -->
                 <div>
                   <label class="block font-semibold mb-1">উপজেলা <span class="text-red-500 text-lg">*</span></label>
-                  <select id="upazila" class="w-full border border-gray-300 p-2 rounded" disabled>
+                  <select required id="upazila" name="upazila" class="w-full border border-gray-300 p-2 rounded"
+                    disabled>
                     <option value="">উপজেলা খুজুন</option>
                   </select>
                 </div>
               </div>
               <div class="mt-4">
                 <label class="block font-semibold mb-1">ঠিকানা <span class="text-red-500 text-lg">*</span></label>
-                <textarea rows="4" class="w-full border border-gray-300 p-2 rounded" placeholder="ঠিকানা"></textarea>
+                <textarea rows="4" class="w-full border border-gray-300 p-2 rounded" placeholder="ঠিকানা" name="street"
+                  required></textarea>
               </div>
             </div>
             <div class="md:col-span-2">
               <label class="block font-semibold mb-1">ডেলিভারি চার্জ</label>
               <div class="flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0 mt-1">
                 <label class="cursor-pointer">
-                  <input type="radio" name="shipping_cost" value="50" class="mr-2" onchange="setShippingCost(this)"
-                    checked />
+                  <input required type="radio" name="shipping_cost" value="50" class="mr-2"
+                    onchange="setShippingCost(this)" checked />
                   ঢাকার ভিতরে: <span class="font-semibold px-2">৳ 50.00</span>
                 </label>
                 <label class="cursor-pointer">
-                  <input type="radio" name="shipping_cost" value="110" class="mr-2" onchange="setShippingCost(this)" />
+                  <input required type="radio" name="shipping_cost" value="110" class="mr-2"
+                    onchange="setShippingCost(this)" />
                   ঢাকার বাহিরে: <span class="font-semibold px-2">৳ 110.00</span>
                 </label>
               </div>
@@ -260,19 +267,17 @@
                 <div class="flex items-end justify-between mt-2">
                   <!-- Quantity Control -->
                   <div class="mt-3 inline-flex border border-gray-300 rounded overflow-hidden">
-                    <button onclick="updateQuantity(-1)" class="px-2 py-0.5 bg-gray-100 text-gray-700">
+                    <button type="button" onclick="updateQuantity(-1)" class="px-2 py-0.5 bg-gray-100 text-gray-700">
                       -
                     </button>
-                    <input type="number" id="quantity" name="quantity" min="1" value="1"
+                    <input required type="number" id="quantity" name="quantity" min="1" value="1"
                       class="w-12 md:w-16 pl-0 md:pl-3 py-0.5 text-center border-l border-r border-gray-300 outline-none"
                       readonly />
-                    <button onclick="updateQuantity(1)" class="px-2 py-0.5 bg-gray-100 text-gray-700">
+                    <button type="button" onclick="updateQuantity(1)" class="px-2 py-0.5 bg-gray-100 text-gray-700">
                       +
                     </button>
                   </div>
-                  <p class="font-bold text-black">
-                    ৳ <span id="unit-price">990</span>.00
-                  </p>
+                  <p class="font-bold text-black">৳ <span id="unit-price">990</span>.00</p>
                 </div>
               </div>
             </div>
@@ -289,21 +294,18 @@
             </div>
 
             <div class="flex justify-between mt-2 text-lg font-bold border-t pt-4">
-              <span>মোট</span><span>৳ <span id="total-price">990</span>.00</span>
+              <span>মোট</span><span>৳ <input required id="total-price">990</span>.00</span>
             </div>
 
-            <button onclick="confirmOrder()"
-              class="mt-6 w-full bg-primary-500 text-white py-3 rounded hover:bg-primary-700 transition">
+            <button class="mt-6 w-full bg-primary-500 text-white py-3 rounded hover:bg-primary-700 transition">
               <i class="fas fa-credit-card mr-2"></i> Confirm Order
             </button>
           </div>
         </div>
-      </div>
-      <div class="text-center mt-8 md:mt-12">
-        <h2 class="text-xl md:text-3xl font-bold text-[#83A64C]">
-          অর্ডার কনফার্ম করতে "Confirm Order" এ ক্লিক করুন
-        </h2>
-      </div>
+    </div>
+    <div class="text-center mt-8 md:mt-12">
+      <h2 class="text-xl md:text-3xl font-bold text-[#83A64C]">অর্ডার কনফার্ম করতে "Confirm Order" এ ক্লিক করুন</h2>
+    </div>
     </div>
   </section>
 
@@ -322,13 +324,18 @@
   <div id="orderSuccessModal"
     class="p-5 fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
     <div class="bg-white p-6 rounded shadow text-center max-w-sm w-full">
-      <h2 class="text-xl font-bold text-green-600 mb-2">
-        অর্ডার সফলভাবে সম্পন্ন হয়েছে!
-      </h2>
-      <p class="text-gray-700 mb-4">
-        আমাদের টিম খুব শীঘ্রই আপনার সাথে যোগাযোগ করবে।
-      </p>
-      <button onclick="document.getElementById('orderSuccessModal').classList.add('hidden')"
+      <h2 class="text-xl font-bold text-green-600 mb-2">অর্ডার সফলভাবে সম্পন্ন হয়েছে!</h2>
+      <p class="text-gray-700 mb-4">আমাদের টিম খুব শীঘ্রই আপনার সাথে যোগাযোগ করবে।</p>
+      <script>
+        function resetForm(e) {
+          const form = document.getElementById("orderForm");
+          if (form) {
+            form.reset()
+            document.getElementById("orderSuccessModal").classList.add("hidden")
+          };
+        }
+      </script>
+      <button type="button" onclick="resetForm(this)"
         class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
         ঠিক আছে
       </button>

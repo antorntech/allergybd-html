@@ -5,6 +5,15 @@ function formatQuantity(price) {
   }).format(price);
 }
 
+function updateTotalPrice(e) {
+  const qty = parseInt(document.getElementById("quantity").value);
+  const shipping_cost = parseInt(e.target.value || 50)
+
+  const total = qty * unitPrice + shipping_cost;
+  document.getElementById("total-price").textContent = total;
+}
+
+
 function initializeSwiper() {
   const images = [
     "/assets/images/reviews/1.png",
@@ -60,12 +69,14 @@ function initializeSwiper() {
   });
 }
 
+
 // Order Functionality
 const unitPrice = 990;
 const shippingPrices = {
   inside: 50,
   outside: 100,
 };
+
 
 let allDistricts = [];
 let allUpazilas = [];
@@ -132,106 +143,79 @@ document.querySelectorAll('input[name="shipping_cost"]').forEach((radio) => {
   radio.addEventListener("change", updateTotalPrice);
 });
 
-function updateTotalPrice(e) {
-  const qty = parseInt(document.getElementById("quantity").value);
-  const shipping_cost = parseInt(e.target.value || 50)
-
-  const total = qty * unitPrice + shipping_cost;
-  document.getElementById("total-price").textContent = total;
-}
 
 // Auto update when shipping_cost selected
 document.querySelectorAll('input[name="shipping_cost"]').forEach((radio) => {
   radio.addEventListener("change", updateTotalPrice);
 });
 
-async function confirmOrder() {
-  const name = document.querySelector('input[placeholder="নাম"]').value.trim();
-  const phone = document.querySelector('input[type="tel"]').value.trim();
-  const address = document.querySelector("textarea").value.trim();
-  const shipping_cost = document.querySelector(
-    'input[name="shipping_cost"]:checked'
-  )?.value;
-  const quantity = parseInt(document.getElementById("quantity").value);
-  const unitPrice = parseInt(document.getElementById("unit-price").textContent);
-  const shippingCost = parseInt(
-    document.getElementById("shipping-cost").textContent
-  );
-
-  const districtId = document.getElementById("district").value;
-  const upazilaId = document.getElementById("upazila").value;
-
-  const selectedDistrict = allDistricts.find((d) => d.id === districtId);
-  const selectedUpazila = allUpazilas.find((u) => u.id === upazilaId);
-
-  const districtName = selectedDistrict?.name || "";
-  const upazilaName = selectedUpazila?.name || "";
-
-  if (
-    !name ||
-    !phone ||
-    !address ||
-    !shipping_cost ||
-    quantity < 1 ||
-    !districtName ||
-    !upazilaName
-  ) {
-    alert("অনুগ্রহ করে সব ফিল্ড পূরণ করুন।");
-    return;
-  }
-
-  const totalPrice = unitPrice * quantity + shippingCost;
-
-  const payload = {
-    name,
-    phone,
-    district: districtName,
-    upazila: upazilaName,
-    street: address,
-    price: totalPrice,
-    quantity,
-    shipping_cost: shippingCost,
-    coupon: "",
-  };
+async function confirmOrder(e) {
+  e.preventDefault();
 
   try {
-    const res = await fetch("https://order.allergyjom.shop/api/v1/order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    const formData = new FormData(e.target)
+    const name = formData.get("name")
+    const email = formData.get("email")
+    const phone = formData.get("phone")
+    const shipping_cost = formData.get("shipping_cost")
+    const quantity = formData.get("quantity")
+    const district_id = formData.get("district")
+    const upazila_id = formData.get("upazila")
+    const street = formData.get("street")
+    const coupon = formData.get("coupon")
+    const price = 990
 
-    if (!res.ok) {
-      const error = await res.json();
-      alert("অর্ডার ব্যর্থ হয়েছে: " + (error?.message || "অনির্দিষ্ট সমস্যা"));
+    const district = allDistricts.find((d) => d.id === district_id).bn_name;
+    const upazila = allUpazilas.find((u) => u.id === upazila_id).bn_name;
+
+    if (
+      !name ||
+      !phone ||
+      !street ||
+      !shipping_cost ||
+      !district ||
+      !upazila
+    ) {
+      alert("অনুগ্রহ করে সব ফিল্ড পূরণ করুন।");
       return;
     }
 
-    // Show success modal
-    document.getElementById("orderSuccessModal").classList.remove("hidden");
+    try {
+      const res = await fetch("https://order.allergyjom.shop/api/v1/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'X-User-Intent': 'true'
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          district,
+          upazila,
+          street,
+          price,
+          quantity,
+          shipping_cost,
+          coupon,
+        }),
+      });
 
-    // Reset form
-    document.querySelector('input[placeholder="নাম"]').value = "";
-    document.querySelector('input[type="email"]').value = "";
-    document.querySelector('input[type="tel"]').value = "";
-    document.querySelector("textarea").value = "";
-    document.getElementById("quantity").value = 1;
-    document.getElementById("district").selectedIndex = 0;
-    document.getElementById("upazila").innerHTML =
-      '<option value="">উপজেলা খুজুন</option>';
-    document.getElementById("upazila").disabled = true;
-    document
-      .querySelectorAll('input[name="shipping_cost"]')
-      .forEach((el) => (el.checked = false));
-    document.getElementById("shipping-cost").textContent = "0";
-    updateTotalPrice();
-  } catch (err) {
-    alert("অর্ডার প্রক্রিয়া করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
-    console.error("Order Error:", err);
+      const data = res.json()
+
+      if (!res.ok) {
+        throw new Error("অর্ডার প্রক্রিয়া করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।")
+      }
+
+      document.getElementById("orderSuccessModal").classList.remove("hidden")
+    } catch (err) {
+      console.error(err.message);
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
+
+document.getElementById("orderForm").addEventListener("submit", confirmOrder)
 
 // Faqs Functionality
 async function loadFAQs() {
