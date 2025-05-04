@@ -73,7 +73,8 @@
             সেরা পণ্য এখন আপনার দোরগোড়ায়!
           </h1>
           <p class="mb-8">
-            সম্পূর্ন প্রাকৃতিকভাবে স্থায়ীভাবে নির্মূল করুণ এলার্জি, চুলকানি, দাউদ, সোরিয়াস, এজমা, শ্বাষকষ্ট কিংবা এলার্জি জনিত যেকোনো সমস্যা
+            সম্পূর্ন প্রাকৃতিকভাবে স্থায়ীভাবে নির্মূল করুণ এলার্জি, চুলকানি, দাউদ, সোরিয়াস, এজমা, শ্বাষকষ্ট কিংবা
+            এলার্জি জনিত যেকোনো সমস্যা
           </p>
           <a href="#order" class="btn primary inline-block">এখনই অর্ডার করুন</a>
         </div>
@@ -200,7 +201,7 @@
   </section>
 
   <!-- Order Section -->
-  <section id="order" class="bg-gray-100">
+  <section id="order" class="bg-linear-gradient">
     <div class="container">
       <div class="space-y-2 mb-8 md:mb-12">
         <h2 class="text-2xl md:text-3xl font-bold text-center">অর্ডার করুন</h2>
@@ -211,17 +212,12 @@
         <div class="lg:col-span-2 bg-white p-4 lg:p-6 rounded-xl shadow-2xl space-y-2 lg:space-y-4">
           <h3 class="text-xl font-semibold mb-4">কাস্টমার তথ্য</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="space-y-2">
+            <div class="space-y-2 lg:col-span-2">
               <div>
                 <label class="block font-semibold mb-1">কাস্টমারের নাম
                   <span class="text-red-500 text-lg">*</span></label>
                 <input required type="text" name="name" class="w-full border border-gray-300 p-2 rounded"
                   placeholder="নাম" />
-              </div>
-              <div>
-                <label class="block font-semibold mb-1">ইমেইল <span class="text-red-500 text-lg">*</span></label>
-                <input type="email" name="email" class="w-full border border-gray-300 p-2 rounded"
-                  placeholder="example@email.com" title="Enter your name" />
               </div>
               <div>
                 <label class="block font-semibold mb-1">মোবাইল নাম্বার<span
@@ -232,32 +228,31 @@
                   pattern="^(013|014|015|016|017|018|019)\d{8}$" />
               </div>
             </div>
-            <div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label class="block font-semibold mb-1">জেলা <span class="text-red-500 text-lg">*</span></label>
-                  <select required id="district" name="district" class="w-full border border-gray-300 p-2 rounded"
-                    onchange="loadUpazilas(this.value)">
-                    <option value="">জেলা খুজুন</option>
-                  </select>
-                </div>
-
-                <!-- New Upazila Dropdown -->
-                <div>
-                  <label class="block font-semibold mb-1">উপজেলা <span class="text-red-500 text-lg">*</span></label>
-                  <select required id="upazila" name="upazila" class="w-full border border-gray-300 p-2 rounded"
-                    disabled>
-                    <option value="">উপজেলা খুজুন</option>
-                  </select>
-                </div>
+            <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block font-semibold mb-1">জেলা <span class="text-red-500 text-lg">*</span></label>
+                <select required id="district" name="district" class="w-full border border-gray-300 p-2 rounded"
+                  onchange="loadUpazilas(this.value)">
+                  <option value="">জেলা খুজুন</option>
+                </select>
               </div>
-              <div class="mt-4">
-                <label class="block font-semibold mb-1">ঠিকানা <span class="text-red-500 text-lg">*</span></label>
-                <textarea rows="4" class="w-full border border-gray-300 p-2 rounded" placeholder="ঠিকানা" name="street"
-                  required></textarea>
+
+              <!-- New Upazila Dropdown -->
+              <div>
+                <label class="block font-semibold mb-1">উপজেলা <span class="text-red-500 text-lg">*</span></label>
+                <select required id="upazila" name="upazila" class="w-full border border-gray-300 p-2 rounded" disabled>
+                  <option value="">উপজেলা খুজুন</option>
+                </select>
               </div>
             </div>
-            <div class="md:col-span-2">
+            <div class="mt-4 lg:col-span-2">
+              <label class="block font-semibold mb-1">যেই এরিয়া থেকে রিসিভ করতে চাচ্ছেন সেই এরিয়ার নাম দিন <span class="text-red-500 text-lg">*</span></label>
+              <textarea rows="2" class="w-full border border-gray-300 p-2 rounded"
+                placeholder="ঠিকানা" name="street"
+                required></textarea>
+            </div>
+
+            <!-- <div class="md:col-span-2">
               <label class="block font-semibold mb-1">ডেলিভারি চার্জ</label>
               <div class="flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0 mt-1">
                 <label class="cursor-pointer">
@@ -271,27 +266,26 @@
                   ঢাকার বাহিরে: <span class="font-semibold px-2">৳ 110.00</span>
                 </label>
               </div>
+            </div> -->
 
-              <script>
-                function formatPrice(price) {
-                  return new Intl.NumberFormat('en-BD', {
-                    // style: 'currency',
-                    // currency: 'BDT',
-                    minimumFractionDigits: 2
-                  }).format(price);
-                }
+            <script>
+              function formatPrice(price) {
+                return new Intl.NumberFormat('en-BD', {
+                  // style: 'currency',
+                  // currency: 'BDT',
+                  minimumFractionDigits: 2
+                }).format(price);
+              }
 
-                window.addEventListener("DOMContentLoaded", function () {
-                  document.getElementById("shipping-cost").innerHTML = formatPrice(50)
-                })
+              window.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("shipping-cost").innerHTML = formatPrice(110)
+              })
 
-                function setShippingCost(e) {
-                  const value = parseFloat(e.value || e.target.value);
-                  document.getElementById("shipping-cost").innerHTML = formatPrice(value)
-                }
-              </script>
-
-            </div>
+              function setShippingCost(e) {
+                const value = parseFloat(e.value || e.target.value);
+                document.getElementById("shipping-cost").innerHTML = formatPrice(value)
+              }
+            </script>
           </div>
         </div>
 
@@ -301,7 +295,7 @@
             <div class="flex items-start space-x-4 mb-4">
               <img src="product.jpg" alt="product" class="w-24 h-24 rounded" />
               <div class="flex-1">
-                <h4 class="font-semibold">অর্গানিক এলার্জি রিমুভাল</h4>
+                <h4 class="font-semibold">এলার্জির জম</h4>
                 <p class="text-sm ">৩ দিনের মধ্যে ডেলিভারি</p>
 
                 <div class="flex items-end justify-between mt-2">
@@ -322,19 +316,12 @@
               </div>
             </div>
 
-            <div class="text-sm  border-t pt-4 mt-4">
-              <p>
-                প্রোমো কোড আছে?
-                <a href="#" class="text-blue-500 hover:underline">এখানে ক্লিক করুন</a>
-              </p>
-            </div>
-
             <div class="flex justify-between mt-4 text-sm">
-              <span>শিপিং কস্ট</span><span>৳ <span id="shipping-cost">0</span></span>
+              <span>ডেলিভারি চার্জ</span><span>৳ <span id="shipping-cost">0</span></span>
             </div>
 
             <div class="flex justify-between mt-2 text-lg font-bold border-t pt-4">
-              <span>মোট</span><span>৳ <span id="total-price">990.00</span></span>
+              <span>মোট</span><span>৳ <span id="total-price"></span></span>
             </div>
 
             <button class="btn primary w-full mt-4">
@@ -352,7 +339,7 @@
   <!-- Footer -->
   <footer class="bg-primary-500 text-white text-center p-4">
     <div class="container flex flex-wrap items-center justify-center md:justify-between gap-2">
-      <div>&copy; ২০২৫ আমার কোম্পানি। সর্বস্বত্ব সংরক্ষিত।</div>
+      <div>&copy; ২০২৫ <a href="/" class="underline">এলার্জির জম</a> সর্বস্বত্ব সংরক্ষিত।</div>
       <div class="flex space-x-4">
         <a href="privacy-policy" class="text-white hover:underline">Privacy policy</a>
         <a href="terms-of-service" class="text-white hover:underline">Terms of service</a>

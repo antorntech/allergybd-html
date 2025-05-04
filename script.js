@@ -1,3 +1,6 @@
+const SHIPPING_COST = 110;
+const UNIT_PRICE = 990;
+
 function formatQuantity(price) {
   return new Intl.NumberFormat('bn-BD', {
     style: 'number',
@@ -7,12 +10,13 @@ function formatQuantity(price) {
 
 function updateTotalPrice(e) {
   const qty = parseInt(document.getElementById("quantity").value);
-  const shipping_cost = parseInt(e.target.value || 50)
 
-  const total = qty * unitPrice + shipping_cost;
+  const total = (qty * UNIT_PRICE) + SHIPPING_COST;
+
   document.getElementById("total-price").textContent = total;
 }
 
+updateTotalPrice()
 
 function initializeSwiper() {
   const images = [
@@ -49,34 +53,26 @@ function initializeSwiper() {
 
   // Now initialize Swiper
   new Swiper(".mySwiper", {
-    effect: "coverflow",
-    grabCursor: true,
+    // effect: "coverflow",
+    // grabCursor: true,
     centeredSlides: true,
     slidesPerView: 3,
     initialSlide: 1,
+    spaceBetween: 32,
     loop: true,
-    coverflowEffect: {
-      rotate: 50,
-      stretch: 0,
-      depth: 100,
-      modifier: 1,
-      slideShadows: false,
-    },
+    // coverflowEffect: {
+    //   rotate: 50,
+    //   stretch: 0,
+    //   depth: 100,
+    //   modifier: 1,
+    //   slideShadows: false,
+    // },
     pagination: {
       el: ".swiper-pagination",
       clickable: true,
     },
   });
 }
-
-
-// Order Functionality
-const unitPrice = 990;
-const shippingPrices = {
-  inside: 50,
-  outside: 100,
-};
-
 
 let allDistricts = [];
 let allUpazilas = [];
@@ -155,9 +151,7 @@ async function confirmOrder(e) {
   try {
     const formData = new FormData(e.target)
     const name = formData.get("name")
-    const email = formData.get("email")
     const phone = formData.get("phone")
-    const shipping_cost = formData.get("shipping_cost")
     const quantity = formData.get("quantity")
     const district_id = formData.get("district")
     const upazila_id = formData.get("upazila")
@@ -172,7 +166,6 @@ async function confirmOrder(e) {
       !name ||
       !phone ||
       !street ||
-      !shipping_cost ||
       !district ||
       !upazila
     ) {
@@ -195,7 +188,7 @@ async function confirmOrder(e) {
           street,
           price,
           quantity,
-          shipping_cost,
+          shipping_cost: SHIPPING_COST,
           coupon,
         }),
       });
@@ -206,7 +199,8 @@ async function confirmOrder(e) {
         throw new Error("অর্ডার প্রক্রিয়া করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।")
       }
 
-      document.getElementById("orderSuccessModal").classList.remove("hidden")
+      location.href = "/success.html"
+      // document.getElementById("orderSuccessModal").classList.remove("hidden")
     } catch (err) {
       console.error(err.message);
     }
