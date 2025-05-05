@@ -37,7 +37,7 @@ body section {
 }
 
 .container {
-  max-width: 1180px;
+  max-width: 1280px !important;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -86,4 +86,23 @@ body section {
 
 .bg-linear-gradient {
     background-image: linear-gradient(135deg, #faf9e0, #e4fce4);
+}
+
+ul li.check {
+  list-style: none;
+  position: relative;
+  padding-left: 1.8em;
+}
+
+ul li.check::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-image: url('check.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
 }

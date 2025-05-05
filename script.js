@@ -47,29 +47,38 @@ function initializeSwiper() {
   images.forEach((src) => {
     const slide = document.createElement("div");
     slide.className = "swiper-slide";
-    slide.innerHTML = `<img src="${src}" class="w-full h-[200px] md:h-[450px] object-cover rounded" />`;
+    slide.innerHTML = `<img src="${src}" class="w-full h-[380px] md:h-[450px] object-cover rounded" />`;
     wrapper.appendChild(slide);
   });
 
   // Now initialize Swiper
   new Swiper(".mySwiper", {
-    // effect: "coverflow",
-    // grabCursor: true,
     centeredSlides: true,
-    slidesPerView: 3,
+    slidesPerView: 4,
     initialSlide: 1,
     spaceBetween: 32,
     loop: true,
-    // coverflowEffect: {
-    //   rotate: 50,
-    //   stretch: 0,
-    //   depth: 100,
-    //   modifier: 1,
-    //   slideShadows: false,
-    // },
     pagination: {
       el: ".swiper-pagination",
       clickable: true,
+    },
+    breakpoints: {
+      // when window width is >= 320px
+      320: {
+        slidesPerView: 1,
+      },
+      // when window width is >= 640px
+      640: {
+        slidesPerView: 3,
+      },
+      // when window width is >= 1024px
+      1024: {
+        slidesPerView: 3,
+      },
+      // when window width is >= 1280px
+      1280: {
+        slidesPerView: 3,
+      },
     },
   });
 }
