@@ -47,7 +47,7 @@ function initializeSwiper() {
   images.forEach((src) => {
     const slide = document.createElement("div");
     slide.className = "swiper-slide";
-    slide.innerHTML = `<img src="${src}" class="w-full h-[380px] md:h-[450px] object-cover rounded" />`;
+    slide.innerHTML = `<img src="${src}" class="w-full h-[380px] md:h-[450px] object-contain rounded" />`;
     wrapper.appendChild(slide);
   });
 
@@ -77,7 +77,7 @@ function initializeSwiper() {
       },
       // when window width is >= 1280px
       1280: {
-        slidesPerView: 3,
+        slidesPerView: 4,
       },
     },
   });
