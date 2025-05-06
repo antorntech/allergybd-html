@@ -62,6 +62,10 @@ function initializeSwiper() {
       el: ".swiper-pagination",
       clickable: true,
     },
+    autoplay: {
+      delay: 3000, // delay in milliseconds
+      disableOnInteraction: false, // keeps autoplay running even when user interacts
+    },
     breakpoints: {
       // when window width is >= 320px
       320: {
