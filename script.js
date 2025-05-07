@@ -161,6 +161,8 @@ document.querySelectorAll('input[name="shipping_cost"]').forEach((radio) => {
 async function confirmOrder(e) {
   e.preventDefault();
 
+  fbq('track', 'Purchase');
+
   try {
     const formData = new FormData(e.target)
     const name = formData.get("name")
