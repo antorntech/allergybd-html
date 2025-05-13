@@ -120,7 +120,7 @@
       </div>
       <div
         class="bg-gradient-to-r from-[#a1c65a] to-[#2e6a47] border-2 border-black p-4 lg:p-6 rounded-xl shadow-md mb-6">
-        <h1 class="text-white text-3xl md:text-4xl lg:text-5xl font-bold text-center overflow-hidden whitespace-wrap"
+        <h1 class="text-white text-2xl md:text-4xl lg:text-5xl font-bold text-center overflow-hidden whitespace-wrap"
           style="line-height: 1.4">
           সম্পূর্ন প্রাকৃতিকভাবে স্থায়ীভাবে নির্মূল করুণ<br>
           এলার্জি, চুলকানি, দাউদ, সোরিয়াস, এজমা, শ্বাষকষ্ট কিংবা এলার্জি জনিত যেকোনো সমস্যা।
@@ -128,9 +128,9 @@
       </div>
     </div>
 
-    <div class="container h-full flex flex-wrap items-center justify-center gap-8 mt-12 lg:mt-16">
+    <div class="container h-full flex flex-wrap items-center justify-center gap-4 lg:gap-8 mt-8 lg:mt-16">
       <div class="basis-96 grow space-y-4 lg:space-y-6 order-2 lg:order-1 flex flex-col items-center lg:items-start">
-        <h1 class="text-3xl md:text-4xl font-bold" style="line-height: 1.4">এলার্জির জম</h1>
+        <h1 class="text-3xl md:text-4xl font-bold !!leading-[1.1] !lg:leading-[1.4]">এলার্জির জম</h1>
         <h2 class="text-3xl md:text-5xl lg:text-5xl font-bold">২ ফাইল কম্বো</h2>
         <h2 class="text-3xl md:text-5xl font-bold">
           <span class="bg-primary-700 p-2 rounded-md text-white">মূল্য <span class="line-through">১৪০০</span>টাকা</span>
@@ -140,7 +140,7 @@
           <a href="#order" class="btn primary inline-block heartbeat">অর্ডার করুন</a>
         </div>
       </div>
-      <div class="basis-96 grow order-1 lg:order-2">
+      <div class="basis-96 grow order-1 lg:order-2 px-4">
         <img src="product.jpg" alt="প্রোডাক্ট ছবি" class="w-full h-auto object-contain" />
       </div>
     </div>
@@ -241,7 +241,7 @@
 
   <!-- FAQ Section -->
   <section id="faq" class="bg-white py-12">
-    <div class="container max-w-4xl mx-auto px-4">
+    <div class="max-w-4xl mx-auto px-4">
       <div class="space-y-2 mb-8 md:mb-12">
         <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-center">
           <span class="bg-primary-700 text-white p-2 rounded-md">প্রায়শই জিজ্ঞাসিত প্রশ্ন</span>
@@ -255,12 +255,11 @@
   </section>
 
   <!-- Features Section -->
-  <section class="bg-gray-100">
+  <!-- <section class="bg-gray-100">
     <div class="container">
       <div class="space-y-2 mb-8 md:mb-12">
         <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-center"><span
             class="bg-primary-700 p-2 rounded-md text-white">দেখুন আমাদের গ্রাহকেরা কী বলছেন</span></h2>
-        <!-- <div class="w-16 md:w-24 h-1 mx-auto bg-primary-500"></div> -->
       </div>
       <div class="flex flex-wrap gap-6 justify-evenly text-center">
         <div class="h-80 lg:h-96">
@@ -298,6 +297,57 @@
         </div>
       </div>
     </div>
+  </section> -->
+
+  <!-- Product Slider Section -->
+  <section class="bg-white relative">
+    <div class="space-y-2 mb-8 md:mb-12">
+      <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-center"><span
+          class="bg-primary-700 p-2 rounded-md text-white">দেখুন আমাদের গ্রাহকেরা কী বলছেন</span></h2>
+    </div>
+
+    <div class="container px-4">
+      <div class="relative pb-16">
+        <div class="swiper videoSwiper">
+          <div class="swiper-wrapper" id="videoSwiper">
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/s1.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/s2.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/s3.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/s4.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/h1.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/h2.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/h3.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/w1.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/h4.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/h5.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+            <div class="swiper-slide h-80 lg:h-[400px] max-w-[280px]">
+              <video src="/assets/videos/h6.mp4" class="w-full h-full rounded-xl object-cover" controls></video>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination video mt-8 !left-1/2 !transform !-translate-x-1/2"></div>
+      </div>
+    </div>
   </section>
 
   <!-- Product Slider Section -->
@@ -320,7 +370,7 @@
         </div>
 
         <!-- Pagination dots -->
-        <div class="swiper-pagination mt-8 !left-1/2 !transform !-translate-x-1/2"></div>
+        <div class="swiper-pagination reviews mt-8 !left-1/2 !transform !-translate-x-1/2"></div>
       </div>
     </div>
   </section>

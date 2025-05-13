@@ -18,6 +18,42 @@ function updateTotalPrice(e) {
 
 updateTotalPrice()
 
+function initializeVideoSwiper() {
+  new Swiper(".videoSwiper", {
+    centeredSlides: true,
+    slidesPerView: 4,
+    initialSlide: 1,
+    spaceBetween: 32,
+    loop: true,
+    pagination: {
+      el: ".swiper-pagination.video",
+      clickable: true,
+    },
+    autoplay: {
+      delay: 4000, // delay in milliseconds
+      disableOnInteraction: false, // keeps autoplay running even when user interacts
+    },
+    breakpoints: {
+      // when window width is >= 320px
+      320: {
+        slidesPerView: 1,
+      },
+      // when window width is >= 640px
+      640: {
+        slidesPerView: 3,
+      },
+      // when window width is >= 1024px
+      1024: {
+        slidesPerView: 3,
+      },
+      // when window width is >= 1280px
+      1280: {
+        slidesPerView: 4,
+      },
+    },
+  });
+}
+
 function initializeSwiper() {
   const images = [
     "/assets/images/reviews/1.png",
@@ -59,7 +95,7 @@ function initializeSwiper() {
     spaceBetween: 32,
     loop: true,
     pagination: {
-      el: ".swiper-pagination",
+      el: ".swiper-pagination.reviews",
       clickable: true,
     },
     autoplay: {
@@ -274,6 +310,7 @@ function toggleFAQ(index) {
 
 window.onload = () => {
   initializeSwiper();
+  initializeVideoSwiper();
   loadFAQs();
   loadDistricts();
   loadUpazilas();
