@@ -196,8 +196,14 @@ document.querySelectorAll('input[name="shipping_cost"]').forEach((radio) => {
 
 async function confirmOrder(e) {
   e.preventDefault();
-
+  
   fbq('track', 'Purchase');
+  
+  const orderButton = document.getElementById("confirmOrder");
+  if (orderButton) {
+    orderButton.disabled = true;
+  }
+  document.getElementById("confirmOrderText").innerText = "Processing...";
 
   try {
     const formData = new FormData(e.target)
@@ -225,10 +231,11 @@ async function confirmOrder(e) {
     }
 
     try {
-      const res = await fetch("https://order.allergyjom.shop/api/v1/order", {
+      const res = await fetch("/api/v1/order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          // Prevent automatic Ghost API request after form submission redirect by indicating intentional user action
           'X-User-Intent': 'true'
         },
         body: JSON.stringify({
