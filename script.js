@@ -237,14 +237,14 @@ async function confirmOrder(e) {
     const name = formData.get("name")
     const phone = formData.get("phone")
     const quantity = formData.get("quantity")
-    const district_id = formData.get("district")
-    const upazila_id = formData.get("upazila")
+    const district = formData.get("district")
+    const upazila = formData.get("upazila")
     const street = formData.get("street")
     const coupon = formData.get("coupon")
     const price = 990
 
-    const district = allDistricts.find((d) => d.id === district_id).bn_name;
-    const upazila = allUpazilas.find((u) => u.id === upazila_id).bn_name;
+    // const district = allDistricts.find((d) => d.id === district_id).bn_name;
+    // const upazila = allUpazilas.find((u) => u.id === upazila_id).bn_name;
 
     if (
       !name ||
@@ -388,7 +388,7 @@ window.onload = () => {
   initializeSwiper();
   initializeVideoSwiper();
   loadFAQs();
-  loadDistricts();
-  loadUpazilas();
+  // loadDistricts();
+  // loadUpazilas();
   incompleteOrder();
 };

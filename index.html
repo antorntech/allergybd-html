@@ -432,18 +432,20 @@
             <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block font-semibold mb-1">জেলা <span class="text-red-500 text-lg">*</span></label>
-                <select required id="district" name="district" class="w-full border border-gray-300 p-2 rounded"
+                <!-- <select required id="district" name="district" class="w-full border border-gray-300 p-2 rounded"
                   onchange="loadUpazilas(this.value)">
                   <option value="">জেলা খুজুন</option>
-                </select>
+                </select> -->
+                <input name="district" id="district" class="w-full border border-gray-300 p-2 rounded" placeholder="জেলার নাম লিখুন" />
               </div>
-
+              
               <!-- New Upazila Dropdown -->
               <div>
-                <label class="block font-semibold mb-1">উপজেলা <span class="text-red-500 text-lg">*</span></label>
-                <select required id="upazila" name="upazila" class="w-full border border-gray-300 p-2 rounded" disabled>
+                <label class="block font-semibold mb-1">উপজেলার / থানা <span class="text-red-500 text-lg">*</span></label>
+                <!-- <select required id="upazila" name="upazila" class="w-full border border-gray-300 p-2 rounded" disabled>
                   <option value="">উপজেলা খুজুন</option>
-                </select>
+                </select> -->
+                <input name="upazila" id="upazila" class="w-full border border-gray-300 p-2 rounded" placeholder="উপজেলার বা থানার নাম লিখুন" />
               </div>
             </div>
             <div class="mt-4 lg:col-span-2">
