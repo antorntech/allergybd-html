@@ -285,7 +285,11 @@ async function confirmOrder(e) {
       if (!res.ok) {
         throw new Error("অর্ডার প্রক্রিয়া করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।")
       } else {
+        localStorage.removeItem("incompleteForm");
+        console.log("Completed and removed incomplete order.")
+
         sendToGTM(payload)
+
         if (orderButton) {
           orderButton.disabled = false
         }
@@ -352,10 +356,38 @@ function toggleFAQ(index) {
   }
 }
 
+function incompleteOrder() {
+  const form = document.getElementById("orderForm")
+
+  form.addEventListener("input", function () {
+    const data = {};
+    for (const element of form.elements) {
+      if (element.name) {
+        data[element.name] = element.value;
+      }
+    }
+    localStorage.setItem("incompleteForm", JSON.stringify(data));
+  })
+
+  // Send data to server when tab is closing
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      const data = localStorage.getItem("incompleteForm");
+      if (data) {
+        navigator.sendBeacon("/api/save-incomplete", data);
+        // Optionally clear it after sending
+        console.log("Sending incomplete order to server")
+        localStorage.removeItem("incompleteForm");
+      }
+    }
+  });
+}
+
 window.onload = () => {
   initializeSwiper();
   initializeVideoSwiper();
   loadFAQs();
   loadDistricts();
   loadUpazilas();
+  incompleteOrder();
 };
