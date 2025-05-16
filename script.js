@@ -194,11 +194,35 @@ document.querySelectorAll('input[name="shipping_cost"]').forEach((radio) => {
   radio.addEventListener("change", updateTotalPrice);
 });
 
+function sendToGTM({ name, phone, district, upazila, street, coupon, price, quantity, shipping_cost }) {
+  if (gtag) {
+    gtag("event", "purchase", {
+      transaction_id: "txn_" + Date.now(), // Ideally, use real order ID from backend
+      value: (price * quantity + shipping_cost),
+      currency: "BDT",
+      items: [
+        {
+          item_id: "product-001", // Replace with real ID if possible
+          item_name: "এলার্জির জম",
+          price: price,
+          quantity: quantity
+        }
+      ],
+      customer_info: {
+        name,
+        phone,
+        district,
+        upazila,
+        street,
+        coupon
+      }
+    });
+  }
+}
+
 async function confirmOrder(e) {
   e.preventDefault();
-  
-  fbq('track', 'Purchase');
-  
+
   const orderButton = document.getElementById("confirmOrder");
   if (orderButton) {
     orderButton.disabled = true;
@@ -231,6 +255,18 @@ async function confirmOrder(e) {
     }
 
     try {
+      const payload = {
+        name,
+        phone,
+        district,
+        upazila,
+        street,
+        price,
+        quantity,
+        shipping_cost: SHIPPING_COST,
+        coupon,
+      }
+
       const res = await fetch("/api/v1/order", {
         method: "POST",
         headers: {
@@ -238,17 +274,7 @@ async function confirmOrder(e) {
           // Prevent automatic Ghost API request after form submission redirect by indicating intentional user action
           'X-User-Intent': 'true'
         },
-        body: JSON.stringify({
-          name,
-          phone,
-          district,
-          upazila,
-          street,
-          price,
-          quantity,
-          shipping_cost: SHIPPING_COST,
-          coupon,
-        }),
+        body: JSON.stringify(payload),
       });
 
       const data = res.json()
@@ -256,6 +282,8 @@ async function confirmOrder(e) {
       if (!res.ok) {
         throw new Error("অর্ডার প্রক্রিয়া করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।")
       }
+
+      sendToGTM(payload)
 
       location.href = "/success.html"
       // document.getElementById("orderSuccessModal").classList.remove("hidden")
