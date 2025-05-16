@@ -291,8 +291,10 @@ async function confirmOrder(e) {
         }
         document.getElementById("confirmOrderText").innerText = "Confirm Order";
 
-        // location.href = "/success.html"
-        // document.getElementById("orderSuccessModal").classList.remove("hidden")
+        const timeout = setTimeout(() => {
+          location.href = "/success.html"
+          clearTimeout(timeout)
+        }, 500);
       }
     } catch (err) {
       console.error(err.message);
