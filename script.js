@@ -217,6 +217,9 @@ function sendToGTM({ name, phone, district, upazila, street, coupon, price, quan
         coupon
       }
     });
+    console.log("GTAG Purchase event triggered.", window.dataLayer)
+  } else {
+    console.error("gtag undefined")
   }
 }
 
@@ -281,12 +284,16 @@ async function confirmOrder(e) {
 
       if (!res.ok) {
         throw new Error("অর্ডার প্রক্রিয়া করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।")
+      } else {
+        sendToGTM(payload)
+        if (orderButton) {
+          orderButton.disabled = false
+        }
+        document.getElementById("confirmOrderText").innerText = "Confirm Order";
+
+        // location.href = "/success.html"
+        // document.getElementById("orderSuccessModal").classList.remove("hidden")
       }
-
-      sendToGTM(payload)
-
-      location.href = "/success.html"
-      // document.getElementById("orderSuccessModal").classList.remove("hidden")
     } catch (err) {
       console.error(err.message);
     }
