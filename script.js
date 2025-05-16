@@ -31,7 +31,7 @@ function initializeVideoSwiper() {
     },
     autoplay: {
       delay: 4000, // delay in milliseconds
-      disableOnInteraction: false, // keeps autoplay running even when user interacts
+      disableOnInteraction: true, // keeps autoplay running even when user interacts
     },
     breakpoints: {
       // when window width is >= 320px
@@ -100,7 +100,7 @@ function initializeSwiper() {
     },
     autoplay: {
       delay: 3000, // delay in milliseconds
-      disableOnInteraction: false, // keeps autoplay running even when user interacts
+      disableOnInteraction: true, // keeps autoplay running even when user interacts
     },
     breakpoints: {
       // when window width is >= 320px
