@@ -374,7 +374,8 @@ function incompleteOrder() {
     if (document.visibilityState === "hidden") {
       const data = localStorage.getItem("incompleteForm");
       if (data) {
-        navigator.sendBeacon("/api/v1/save-incomplete", data);
+        const blob = new Blob([data], { type: "application/json" });
+        navigator.sendBeacon("/api/v1/save-incomplete", blob);
         // Optionally clear it after sending
         console.log("Sending incomplete order to server")
         localStorage.removeItem("incompleteForm");
