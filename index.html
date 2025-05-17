@@ -159,7 +159,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="hidden">
     <div class="container text-center mb-10">
       <h2 class="text-3xl lg:text-4xl font-bold "><span class="bg-primary-700 p-2 rounded-md text-white"
           style="line-height: 1.5;">এই ক্যাম্পেইনে অংশগ্রহন করে আপনিও জিতে নিতে পারেন আকর্ষনীয়</span><br><span
@@ -212,13 +212,31 @@
     </div>
   </section>
 
+  <!-- Product Section -->
+  <section class="bg-primary-700 text-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="space-y-2 mb-8 md:mb-12">
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-center">
+          <span class="bg-primary-700 p-2 rounded-md text-white" style="line-height: 1.5;">অফার মূল্য <span
+              class="text-yellow-300 underline underline-offset-4">৮৯০ টাকা</span></span>
+        </h2>
+        <h4 class="text-center text-lg font-semibold">১ ফাইল ৭০০টাকা। ২ ফাইল (ফুল কোর্স) ১৪০০ টাকা</h4>
+        <h4 class="text-center text-lg font-semibold text-yellow-300">২ ফাইলের অফার মূল্য-১১০০টাকা</h4>
+        <h4 class="text-center text-lg font-semibold">৩০০ টাকা ডিসকাউন্ট!</h4>
+        <h4 class="text-center text-lg font-semibold">(ফ্রি হোম ডেলিভারি!!)</h4>
+        <div class="pt-4 flex justify-center">
+          <a href="#order" class="btn primary inline-block heartbeat">অর্ডার করুন</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Features Section -->
   <section class="bg-gray-100">
     <div class="container">
       <div class="space-y-2 mb-8 md:mb-12">
         <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-center">
-          <span class="bg-primary-700 p-2 rounded-md text-white" style="line-height: 1.5;">কেনো এলার্জির জম সেবন
-            করবেন?</span>
+          <span class="bg-primary-700 p-2 rounded-md text-white" style="line-height: 1.5;">এলার্জি জম এর উপকারিতা</span>
         </h2>
       </div>
       <div class="">
@@ -230,7 +248,12 @@
           <li class="check">এলার্জির জম পাউডারটি সম্পূর্ন ন্যাচারাল উপাদান দিয়ে তৈরি
             যেমন-ত্রিফলা,মালঞ্চ,অন্তরমূল,কালোমেঘ,জয়ন্তী এছাড়াও আরো শক্তিশালী কিছু প্রাকৃতিক উপাদানের সংমিশ্রনে তৈরি
             আমাদের এই এলার্জির জম তাই এটাতে কোনো সাইডইফেক্ট নেই।</li>
+          <li class="check">বংশপরম্পরায় চলে আসা এলার্জি থেকে মুক্তি</li>
         </ul>
+      </div>
+      <p class="text-center text-lg mt-6">লিমিটেড স্টক, তাই দেরি না করে এখন ই অর্ডার করুন</p>
+      <div class="pt-4 flex justify-center">
+        <a href="#order" class="btn primary inline-block heartbeat">অর্ডার করুন</a>
       </div>
     </div>
   </section>
@@ -436,16 +459,19 @@
                   onchange="loadUpazilas(this.value)">
                   <option value="">জেলা খুজুন</option>
                 </select> -->
-                <input name="district" id="district" class="w-full border border-gray-300 p-2 rounded" placeholder="জেলার নাম লিখুন" />
+                <input name="district" id="district" class="w-full border border-gray-300 p-2 rounded"
+                  placeholder="জেলার নাম লিখুন" />
               </div>
-              
+
               <!-- New Upazila Dropdown -->
               <div>
-                <label class="block font-semibold mb-1">উপজেলার / থানা <span class="text-red-500 text-lg">*</span></label>
+                <label class="block font-semibold mb-1">উপজেলার / থানা <span
+                    class="text-red-500 text-lg">*</span></label>
                 <!-- <select required id="upazila" name="upazila" class="w-full border border-gray-300 p-2 rounded" disabled>
                   <option value="">উপজেলা খুজুন</option>
                 </select> -->
-                <input name="upazila" id="upazila" class="w-full border border-gray-300 p-2 rounded" placeholder="উপজেলার বা থানার নাম লিখুন" />
+                <input name="upazila" id="upazila" class="w-full border border-gray-300 p-2 rounded"
+                  placeholder="উপজেলার বা থানার নাম লিখুন" />
               </div>
             </div>
             <div class="mt-4 lg:col-span-2">
@@ -454,41 +480,6 @@
               <textarea rows="2" class="w-full border border-gray-300 p-2 rounded" placeholder="ঠিকানা" name="street"
                 required></textarea>
             </div>
-
-            <!-- <div class="md:col-span-2">
-              <label class="block font-semibold mb-1">ডেলিভারি চার্জ</label>
-              <div class="flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0 mt-1">
-                <label class="cursor-pointer">
-                  <input required type="radio" name="shipping_cost" value="50" class="mr-2"
-                    onchange="setShippingCost(this)" checked />
-                  ঢাকার ভিতরে: <span class="font-semibold px-2">৳ 50.00</span>
-                </label>
-                <label class="cursor-pointer">
-                  <input required type="radio" name="shipping_cost" value="110" class="mr-2"
-                    onchange="setShippingCost(this)" />
-                  ঢাকার বাহিরে: <span class="font-semibold px-2">৳ 110.00</span>
-                </label>
-              </div>
-            </div> -->
-
-            <script>
-              function formatPrice(price) {
-                return new Intl.NumberFormat('en-BD', {
-                  // style: 'currency',
-                  // currency: 'BDT',
-                  minimumFractionDigits: 2
-                }).format(price);
-              }
-
-              window.addEventListener("DOMContentLoaded", function () {
-                document.getElementById("shipping-cost").innerHTML = formatPrice(110)
-              })
-
-              function setShippingCost(e) {
-                const value = parseFloat(e.value || e.target.value);
-                document.getElementById("shipping-cost").innerHTML = formatPrice(value)
-              }
-            </script>
           </div>
         </div>
 
@@ -516,7 +507,7 @@
                       +
                     </button>
                   </div>
-                  <p class="font-bold text-black ml-2">৳ <span id="unit-price">990</span>.00</p>
+                  <p class="font-bold text-black ml-2">৳ <span id="unit-price">700</span>.00</p>
                 </div>
               </div>
             </div>

@@ -1,5 +1,18 @@
-const SHIPPING_COST = 110;
-const UNIT_PRICE = 990;
+const SHIPPING_COST = 0;
+const UNIT_PRICE = 700;
+
+function formatPrice(price) {
+  return new Intl.NumberFormat('en-BD', {
+    // style: 'currency',
+    // currency: 'BDT',
+    minimumFractionDigits: 2
+  }).format(price);
+}
+
+function setShippingCost(e) {
+  const value = parseFloat(e.value || e.target.value);
+  document.getElementById("shipping-cost").innerHTML = formatPrice(value)
+}
 
 function formatQuantity(price) {
   return new Intl.NumberFormat('bn-BD', {
@@ -11,8 +24,13 @@ function formatQuantity(price) {
 function updateTotalPrice(e) {
   const qty = parseInt(document.getElementById("quantity").value);
 
-  const total = (qty * UNIT_PRICE) + SHIPPING_COST;
-
+  let total = 0;
+  if (qty > 1) {
+    const offerPrice = UNIT_PRICE - 150
+    total = (qty * offerPrice) + SHIPPING_COST;
+  } else {
+    total = (qty * UNIT_PRICE) + SHIPPING_COST;
+  }
   document.getElementById("total-price").textContent = total;
 }
 
@@ -241,7 +259,7 @@ async function confirmOrder(e) {
     const upazila = formData.get("upazila")
     const street = formData.get("street")
     const coupon = formData.get("coupon")
-    const price = 990
+    const price = UNIT_PRICE
 
     // const district = allDistricts.find((d) => d.id === district_id).bn_name;
     // const upazila = allUpazilas.find((u) => u.id === upazila_id).bn_name;
@@ -391,4 +409,8 @@ window.onload = () => {
   // loadDistricts();
   // loadUpazilas();
   incompleteOrder();
+
+  window.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("shipping-cost").innerHTML = formatPrice(0)
+  })
 };
