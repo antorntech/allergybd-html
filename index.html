@@ -415,36 +415,36 @@
         </div>
       </div>
       <div class="container flex items-center gap-4 mt-8">
-        <!-- Single Product Card -->
-        <label
-          class="flex cursor-pointer w-full items-center bg-white gap-4 rounded-xl border p-4 transition hover:shadow-xl peer-checked:border-blue-500 peer-checked:ring-2 peer-checked:ring-blue-400">
-          <input type="radio" name="quantity" value="1" class="size-6" />
-
-          <img src="product.jpg" alt="Single Product" class="size-24 rounded-lg object-cover border" />
-
-          <div class="flex-1">
-            <h4 class="font-semibold">১টি প্যাক</h4>
-            <p class="text-sm">৩ দিনের মধ্যে ডেলিভারি</p>
-
-            <div class="mt-2 flex items-end justify-between">
-              <p class="font-bold text-black">৳ <span>700</span>.00</p>
-            </div>
-          </div>
-        </label>
-
         <!-- Double Product Card -->
         <label
           class="flex cursor-pointer w-full items-center bg-white gap-4 rounded-xl border p-4 transition hover:shadow-xl peer-checked:border-blue-500 peer-checked:ring-2 peer-checked:ring-blue-400">
           <input type="radio" name="quantity" value="2" class="size-6" checked />
 
-          <img src="product.jpg" alt="Single Product" class="size-24 rounded-lg object-cover border" />
+          <img src="product.jpg" alt="Single Product" class="size-24 rounded-lg object-contain bg-[#cacdd1] border p-2" />
 
           <div class="flex-1">
-            <h4 class="font-semibold">২টি প্যাক</h4>
+            <h4 class="font-bold">২টি প্যাক</h4>
+            <p class="text-sm">ফুল কোর্স</p>
+
+            <div class="mt-2 flex items-end justify-between">
+              <p class="font-bold">৳ <span>1100</span>.00</p>
+            </div>
+          </div>
+        </label>
+
+        <!-- Single Product Card -->
+        <label
+          class="flex cursor-pointer w-full items-center bg-white gap-4 rounded-xl border p-4 transition hover:shadow-xl peer-checked:border-blue-500 peer-checked:ring-2 peer-checked:ring-blue-400">
+          <input type="radio" name="quantity" value="1" class="size-6" />
+
+          <img src="product-single.png" alt="Single Product" class="size-24 rounded-lg object-contain bg-[#cacdd1] border p-2" />
+
+          <div class="flex-1">
+            <h4 class="font-bold">১টি প্যাক</h4>
             <p class="text-sm">৩ দিনের মধ্যে ডেলিভারি</p>
 
             <div class="mt-2 flex items-end justify-between">
-              <p class="font-bold text-black">৳ <span>1100</span>.00</p>
+              <p class="font-bold">৳ <span>700</span>.00</p>
             </div>
           </div>
         </label>
@@ -506,11 +506,11 @@
           <!-- Right: Order Summary -->
           <div class="basis-full lg:basis-96 shrink-0 flex justify-center items-center">
             <div class="bg-white p-4 lg:p-6 rounded-xl shadow-2xl w-full">
-              <div class="flex justify-between text-sm">
+              <!-- <div class="flex justify-between text-sm hidden">
                 <span>ডেলিভারি চার্জ</span><span>৳ <span id="shipping-cost">0</span></span>
-              </div>
+              </div> -->
 
-              <div class="flex justify-between mt-2 text-lg font-bold border-t pt-4">
+              <div class="flex justify-between text-lg font-bold">
                 <span>মোট</span><span>৳ <span id="total-price"></span></span>
               </div>
 
