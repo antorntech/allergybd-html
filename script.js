@@ -21,20 +21,19 @@ function formatQuantity(price) {
   }).format(price);
 }
 
-function updateTotalPrice(e) {
-  const qty = parseInt(document.getElementById("quantity").value);
+function updateTotalPrice() {
+  const quantity = Number(document.querySelector('[name="quantity"]:checked').value);
+  console.log(quantity)
 
   let total = 0;
-  if (qty > 1) {
+  if (quantity > 1) {
     const offerPrice = UNIT_PRICE - 150
-    total = (qty * offerPrice) + SHIPPING_COST;
+    total = (quantity * offerPrice) + SHIPPING_COST;
   } else {
-    total = (qty * UNIT_PRICE) + SHIPPING_COST;
+    total = (quantity * UNIT_PRICE) + SHIPPING_COST;
   }
   document.getElementById("total-price").textContent = total;
 }
-
-updateTotalPrice()
 
 function initializeVideoSwiper() {
   new Swiper(".videoSwiper", {
@@ -326,8 +325,6 @@ async function confirmOrder(e) {
   }
 }
 
-document.getElementById("orderForm").addEventListener("submit", confirmOrder)
-
 // Faqs Functionality
 async function loadFAQs() {
   try {
@@ -377,29 +374,31 @@ function toggleFAQ(index) {
 function incompleteOrder() {
   const form = document.getElementById("orderForm")
 
-  form.addEventListener("input", function () {
-    const data = {};
-    for (const element of form.elements) {
-      if (element.name) {
-        data[element.name] = element.value;
+  if (form) {
+    form.addEventListener("input", function () {
+      const data = {};
+      for (const element of form.elements) {
+        if (element.name) {
+          data[element.name] = element.value;
+        }
       }
-    }
-    localStorage.setItem("incompleteForm", JSON.stringify(data));
-  })
+      localStorage.setItem("incompleteForm", JSON.stringify(data));
+    })
 
-  // Send data to server when tab is closing
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") {
-      const data = localStorage.getItem("incompleteForm");
-      if (data) {
-        const blob = new Blob([data], { type: "application/json" });
-        navigator.sendBeacon("/api/v1/save-incomplete", blob);
-        // Optionally clear it after sending
-        console.log("Sending incomplete order to server")
-        localStorage.removeItem("incompleteForm");
+    // Send data to server when tab is closing
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        const data = localStorage.getItem("incompleteForm");
+        if (data) {
+          const blob = new Blob([data], { type: "application/json" });
+          navigator.sendBeacon("/api/v1/save-incomplete", blob);
+          // Optionally clear it after sending
+          console.log("Sending incomplete order to server")
+          localStorage.removeItem("incompleteForm");
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 window.onload = () => {
@@ -408,7 +407,19 @@ window.onload = () => {
   loadFAQs();
   // loadDistricts();
   // loadUpazilas();
+  updateTotalPrice();
   incompleteOrder();
+
+  const orderForm = document.getElementById("orderForm")
+  if (orderForm) {
+    orderForm.addEventListener("submit", confirmOrder)
+  }
+
+  document.querySelectorAll('[name="quantity"]').forEach(e => {
+    e.addEventListener("change", function () {
+      updateTotalPrice();
+    })
+  })
 
   window.addEventListener("DOMContentLoaded", function () {
     document.getElementById("shipping-cost").innerHTML = formatPrice(0)
