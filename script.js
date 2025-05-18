@@ -240,6 +240,36 @@ function sendToGTM({ name, phone, district, upazila, street, coupon, price, quan
   }
 }
 
+function sendToFacebookPixel({ name, phone, district, upazila, street, coupon, price, quantity, shipping_cost }) {
+  if (typeof fbq !== "undefined") {
+    fbq('track', 'Purchase', {
+      value: (price * quantity + shipping_cost),
+      currency: 'BDT',
+      contents: [
+        {
+          id: 'product-001', // Replace with actual product ID
+          quantity: quantity,
+          item_price: price
+        }
+      ],
+      content_type: 'product',
+      custom_data: {
+        name,
+        phone,
+        district,
+        upazila,
+        street,
+        coupon,
+        shipping_cost
+      }
+    });
+
+    console.log("FB Pixel Purchase event triggered.");
+  } else {
+    console.error("fbq is undefined.");
+  }
+}
+
 async function confirmOrder(e) {
   e.preventDefault();
 
@@ -306,6 +336,7 @@ async function confirmOrder(e) {
         console.log("Completed and removed incomplete order.")
 
         sendToGTM(payload)
+        sendToFacebookPixel(payload)
 
         if (orderButton) {
           orderButton.disabled = false
